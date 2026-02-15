@@ -55,9 +55,45 @@ def test_zero_tokens():
     assert cost == 0.0
 
 
-def test_pricing_table_has_both_providers():
+def test_pricing_table_has_all_providers():
     models = list(MODEL_PRICING.keys())
     has_openai = any(m.startswith("gpt") or m.startswith("o1") or m.startswith("o3") for m in models)
     has_anthropic = any(m.startswith("claude") for m in models)
+    has_google = any(m.startswith("gemini") for m in models)
+    has_mistral = any("mistral" in m or m.startswith("codestral") for m in models)
+    has_cohere = any(m.startswith("command") for m in models)
     assert has_openai
     assert has_anthropic
+    assert has_google
+    assert has_mistral
+    assert has_cohere
+
+
+def test_gemini_pricing():
+    pricing = get_model_pricing("gemini-1.5-pro")
+    assert pricing is not None
+    cost = calculate_llm_cost("gemini-1.5-pro", input_tokens=1000, output_tokens=500)
+    assert cost is not None
+    assert cost > 0
+
+
+def test_mistral_pricing():
+    pricing = get_model_pricing("mistral-large-latest")
+    assert pricing is not None
+    cost = calculate_llm_cost("mistral-large-latest", input_tokens=1000, output_tokens=500)
+    assert cost is not None
+    assert cost > 0
+
+
+def test_cohere_pricing():
+    pricing = get_model_pricing("command-r-plus")
+    assert pricing is not None
+    cost = calculate_llm_cost("command-r-plus", input_tokens=1000, output_tokens=500)
+    assert cost is not None
+    assert cost > 0
+
+
+def test_gemini_flash_cheaper_than_pro():
+    cost_flash = calculate_llm_cost("gemini-1.5-flash", input_tokens=1000, output_tokens=1000)
+    cost_pro = calculate_llm_cost("gemini-1.5-pro", input_tokens=1000, output_tokens=1000)
+    assert cost_flash < cost_pro

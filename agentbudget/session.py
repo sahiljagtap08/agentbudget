@@ -179,6 +179,59 @@ class BudgetSession:
         }
 
 
+class AsyncBudgetSession(BudgetSession):
+    """Async version of BudgetSession.
+
+    Usage:
+        async with budget.async_session() as session:
+            response = await session.wrap(openai_acall(...))
+            session.track(tool_result, cost=0.01)
+    """
+
+    async def __aenter__(self) -> "AsyncBudgetSession":
+        self._start_time = time.time()
+        return self
+
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        self.__exit__(exc_type, exc_val, exc_tb)
+
+    async def wrap_async(self, coroutine):
+        """Await an LLM coroutine and record its cost.
+
+        Usage:
+            response = await session.wrap_async(
+                client.chat.completions.acreate(...)
+            )
+        """
+        response = await coroutine
+        return self.wrap(response)
+
+    def track_tool(self, cost: float, tool_name: Optional[str] = None):
+        """Decorator that works for both sync and async functions."""
+        import asyncio
+        import functools
+
+        def decorator(func):
+            name = tool_name or func.__name__
+
+            if asyncio.iscoroutinefunction(func):
+                @functools.wraps(func)
+                async def async_wrapper(*args, **kwargs):
+                    result = await func(*args, **kwargs)
+                    self.track(result, cost=cost, tool_name=name)
+                    return result
+                return async_wrapper
+            else:
+                @functools.wraps(func)
+                def sync_wrapper(*args, **kwargs):
+                    result = func(*args, **kwargs)
+                    self.track(result, cost=cost, tool_name=name)
+                    return result
+                return sync_wrapper
+
+        return decorator
+
+
 def _extract_model(response: Any) -> Optional[str]:
     """Extract model name from an LLM response object."""
     return getattr(response, "model", None)
