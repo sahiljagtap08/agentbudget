@@ -6,6 +6,21 @@ from .circuit_breaker import CircuitBreaker, LoopDetectorConfig
 from .exceptions import InvalidBudget
 from .ledger import Ledger
 from .session import AsyncBudgetSession, BudgetSession
+from .webhook import WebhookEmitter
+
+
+def _chain_callbacks(
+    user_cb: Optional[Callable], webhook_cb: Callable
+) -> Callable:
+    """Combine a user callback with a webhook callback."""
+    if user_cb is None:
+        return webhook_cb
+
+    def chained(report):
+        user_cb(report)
+        webhook_cb(report)
+
+    return chained
 
 
 def parse_budget(value: str | float | int) -> float:
@@ -52,6 +67,7 @@ class AgentBudget:
         on_soft_limit: Optional[Callable] = None,
         on_hard_limit: Optional[Callable] = None,
         on_loop_detected: Optional[Callable] = None,
+        webhook_url: Optional[str] = None,
     ):
         self._budget = parse_budget(max_spend)
         self._soft_limit = soft_limit
@@ -59,9 +75,17 @@ class AgentBudget:
             max_repeated_calls=max_repeated_calls,
             time_window_seconds=loop_window_seconds,
         )
-        self._on_soft_limit = on_soft_limit
-        self._on_hard_limit = on_hard_limit
-        self._on_loop_detected = on_loop_detected
+
+        # Wire up webhook emitter if URL is provided
+        if webhook_url:
+            emitter = WebhookEmitter(webhook_url)
+            self._on_soft_limit = _chain_callbacks(on_soft_limit, emitter.on_soft_limit)
+            self._on_hard_limit = _chain_callbacks(on_hard_limit, emitter.on_hard_limit)
+            self._on_loop_detected = _chain_callbacks(on_loop_detected, emitter.on_loop_detected)
+        else:
+            self._on_soft_limit = on_soft_limit
+            self._on_hard_limit = on_hard_limit
+            self._on_loop_detected = on_loop_detected
 
     @property
     def max_spend(self) -> float:

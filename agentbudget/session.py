@@ -43,6 +43,7 @@ class BudgetSession:
         self._on_soft_limit = on_soft_limit
         self._on_hard_limit = on_hard_limit
         self._on_loop_detected = on_loop_detected
+        self._parent: Optional["BudgetSession"] = None
         self._start_time: Optional[float] = None
         self._end_time: Optional[float] = None
         self._terminated_by: Optional[str] = None
@@ -62,15 +63,6 @@ class BudgetSession:
     def __enter__(self) -> "BudgetSession":
         self._start_time = time.time()
         return self
-
-    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
-        self._end_time = time.time()
-        if exc_type and exc_type.__name__ == "BudgetExhausted":
-            self._terminated_by = "budget_exhausted"
-            if self._on_hard_limit:
-                self._on_hard_limit(self.report())
-        elif exc_type and exc_type.__name__ == "LoopDetected":
-            self._terminated_by = "loop_detected"
 
     def _check_after_record(self, call_key: Optional[str] = None) -> None:
         """Run circuit breaker checks after recording a cost event."""
@@ -159,6 +151,51 @@ class BudgetSession:
             return wrapper
 
         return decorator
+
+    def child_session(
+        self,
+        max_spend: float,
+        session_id: Optional[str] = None,
+    ) -> "BudgetSession":
+        """Create a child session with its own sub-budget.
+
+        The child's budget is capped at max_spend AND the parent's remaining
+        budget (whichever is smaller). When the child session ends, its total
+        spend is charged to the parent.
+
+        Usage:
+            with budget.session() as parent:
+                child = parent.child_session(max_spend=1.0)
+                with child:
+                    child.track("result", cost=0.50, tool_name="sub_task")
+                # parent is now charged $0.50
+        """
+        cap = min(max_spend, self.remaining)
+        child_ledger = Ledger(budget=cap)
+        child = BudgetSession(
+            ledger=child_ledger,
+            session_id=session_id,
+            circuit_breaker=CircuitBreaker(),
+        )
+        child._parent = self
+        return child
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        self._end_time = time.time()
+        if exc_type and exc_type.__name__ == "BudgetExhausted":
+            self._terminated_by = "budget_exhausted"
+            if self._on_hard_limit:
+                self._on_hard_limit(self.report())
+        elif exc_type and exc_type.__name__ == "LoopDetected":
+            self._terminated_by = "loop_detected"
+
+        # Roll up child spend to parent
+        if self._parent is not None and self._ledger.spent > 0:
+            self._parent.track(
+                None,
+                cost=self._ledger.spent,
+                tool_name=f"child:{self._session_id}",
+            )
 
     def report(self) -> dict[str, Any]:
         """Generate a structured cost report for this session."""
