@@ -137,6 +137,29 @@ class BudgetSession:
         self._check_after_record(call_key=tool_name)
         return result
 
+    def track_tool(self, cost: float, tool_name: Optional[str] = None):
+        """Decorator to track a function's cost on every call.
+
+        Usage:
+            @session.track_tool(cost=0.02, tool_name="search")
+            def my_tool(query):
+                return api.search(query)
+        """
+        import functools
+
+        def decorator(func):
+            name = tool_name or func.__name__
+
+            @functools.wraps(func)
+            def wrapper(*args, **kwargs):
+                result = func(*args, **kwargs)
+                self.track(result, cost=cost, tool_name=name)
+                return result
+
+            return wrapper
+
+        return decorator
+
     def report(self) -> dict[str, Any]:
         """Generate a structured cost report for this session."""
         duration = None
@@ -162,10 +185,23 @@ def _extract_model(response: Any) -> Optional[str]:
 
 
 def _extract_usage(response: Any) -> tuple[Optional[int], Optional[int]]:
-    """Extract token usage from an LLM response object."""
+    """Extract token usage from an LLM response object.
+
+    Supports both OpenAI-style (prompt_tokens/completion_tokens)
+    and Anthropic-style (input_tokens/output_tokens) responses.
+    """
     usage = getattr(response, "usage", None)
     if usage is None:
         return None, None
+
+    # OpenAI style
     input_tokens = getattr(usage, "prompt_tokens", None)
     output_tokens = getattr(usage, "completion_tokens", None)
+
+    # Anthropic style fallback
+    if input_tokens is None:
+        input_tokens = getattr(usage, "input_tokens", None)
+    if output_tokens is None:
+        output_tokens = getattr(usage, "output_tokens", None)
+
     return input_tokens, output_tokens

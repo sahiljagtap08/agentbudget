@@ -1,6 +1,5 @@
 """AgentBudget — top-level API for creating budget-enforced sessions."""
 
-import re
 from typing import Callable, Optional
 
 from .circuit_breaker import CircuitBreaker, LoopDetectorConfig

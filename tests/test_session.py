@@ -8,15 +8,29 @@ from agentbudget.session import BudgetSession
 
 
 class FakeUsage:
+    """OpenAI-style usage object."""
     def __init__(self, prompt_tokens, completion_tokens):
         self.prompt_tokens = prompt_tokens
         self.completion_tokens = completion_tokens
+
+
+class FakeAnthropicUsage:
+    """Anthropic-style usage object."""
+    def __init__(self, input_tokens, output_tokens):
+        self.input_tokens = input_tokens
+        self.output_tokens = output_tokens
 
 
 class FakeResponse:
     def __init__(self, model, prompt_tokens, completion_tokens):
         self.model = model
         self.usage = FakeUsage(prompt_tokens, completion_tokens)
+
+
+class FakeAnthropicResponse:
+    def __init__(self, model, input_tokens, output_tokens):
+        self.model = model
+        self.usage = FakeAnthropicUsage(input_tokens, output_tokens)
 
 
 def test_session_context_manager():
@@ -115,3 +129,67 @@ def test_report_terminated_by_budget():
 
     report = session.report()
     assert report["terminated_by"] == "budget_exhausted"
+
+
+def test_wrap_anthropic_response():
+    ledger = Ledger(budget=5.0)
+    with BudgetSession(ledger) as session:
+        response = FakeAnthropicResponse(
+            "claude-3-5-sonnet-20241022", input_tokens=1000, output_tokens=500
+        )
+        result = session.wrap(response)
+        assert result is response
+        assert session.spent > 0
+
+
+def test_wrap_anthropic_cost_correct():
+    ledger = Ledger(budget=5.0)
+    with BudgetSession(ledger) as session:
+        response = FakeAnthropicResponse(
+            "claude-3-5-sonnet-20241022", input_tokens=1000, output_tokens=500
+        )
+        session.wrap(response)
+        # claude-3-5-sonnet: $3/1M input, $15/1M output
+        expected = (1000 * 3.0 / 1_000_000) + (500 * 15.0 / 1_000_000)
+        assert abs(session.spent - expected) < 1e-10
+
+
+def test_track_tool_decorator():
+    ledger = Ledger(budget=5.0)
+    with BudgetSession(ledger) as session:
+
+        @session.track_tool(cost=0.02, tool_name="search")
+        def my_search(query):
+            return {"results": [query]}
+
+        result = my_search("test query")
+        assert result == {"results": ["test query"]}
+        assert session.spent == 0.02
+
+
+def test_track_tool_decorator_uses_func_name():
+    ledger = Ledger(budget=5.0)
+    with BudgetSession(ledger) as session:
+
+        @session.track_tool(cost=0.01)
+        def fetch_data():
+            return "data"
+
+        fetch_data()
+
+    report = session.report()
+    assert report["breakdown"]["tools"]["by_tool"]["fetch_data"] == 0.01
+
+
+def test_track_tool_decorator_multiple_calls():
+    ledger = Ledger(budget=5.0)
+    with BudgetSession(ledger) as session:
+
+        @session.track_tool(cost=0.05, tool_name="api")
+        def call_api():
+            return "ok"
+
+        call_api()
+        call_api()
+        call_api()
+        assert abs(session.spent - 0.15) < 1e-10
