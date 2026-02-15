@@ -1,5 +1,7 @@
 """Budget ledger — tracks running totals and event history."""
 
+from __future__ import annotations
+
 import threading
 from typing import Any
 

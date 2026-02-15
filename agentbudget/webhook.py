@@ -1,5 +1,7 @@
 """Webhook event streaming for budget events."""
 
+from __future__ import annotations
+
 import json
 import logging
 import urllib.request

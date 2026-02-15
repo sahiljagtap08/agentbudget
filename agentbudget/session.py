@@ -1,5 +1,7 @@
 """Budget session — context manager that wraps LLM and tool calls."""
 
+from __future__ import annotations
+
 import time
 from typing import Any, Optional, TypeVar
 

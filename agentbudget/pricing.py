@@ -3,6 +3,8 @@
 Prices are per token in USD. Updated as of early 2025.
 """
 
+from __future__ import annotations
+
 from typing import Optional
 
 # Mapping of model name -> (input_price_per_token, output_price_per_token)
