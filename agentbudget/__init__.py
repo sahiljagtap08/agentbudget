@@ -4,7 +4,7 @@ __version__ = "0.1.0"
 
 from .budget import AgentBudget
 from .exceptions import AgentBudgetError, BudgetExhausted, InvalidBudget
-from .session import BudgetSession
+from .session import BudgetSession, LoopDetected
 
 __all__ = [
     "AgentBudget",
@@ -12,4 +12,5 @@ __all__ = [
     "BudgetExhausted",
     "BudgetSession",
     "InvalidBudget",
+    "LoopDetected",
 ]

@@ -71,4 +71,15 @@ class AgentBudget:
     def session(self, session_id: Optional[str] = None) -> BudgetSession:
         """Create a new budget session."""
         ledger = Ledger(budget=self._budget)
-        return BudgetSession(ledger=ledger, session_id=session_id)
+        circuit_breaker = CircuitBreaker(
+            soft_limit_fraction=self._soft_limit,
+            loop_config=self._loop_config,
+        )
+        return BudgetSession(
+            ledger=ledger,
+            session_id=session_id,
+            circuit_breaker=circuit_breaker,
+            on_soft_limit=self._on_soft_limit,
+            on_hard_limit=self._on_hard_limit,
+            on_loop_detected=self._on_loop_detected,
+        )

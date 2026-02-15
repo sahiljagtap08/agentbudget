@@ -3,11 +3,20 @@
 import time
 from typing import Any, Optional, TypeVar
 
+from .circuit_breaker import CircuitBreaker
 from .ledger import Ledger
 from .pricing import calculate_llm_cost
 from .types import CostEvent, CostType, generate_session_id
 
 T = TypeVar("T")
+
+
+class LoopDetected(Exception):
+    """Raised when the circuit breaker detects a call loop."""
+
+    def __init__(self, key: str):
+        self.key = key
+        super().__init__(f"Loop detected: repeated calls to {key!r}")
 
 
 class BudgetSession:
@@ -19,9 +28,21 @@ class BudgetSession:
             session.track(tool_call(), cost=0.01)
     """
 
-    def __init__(self, ledger: Ledger, session_id: Optional[str] = None):
+    def __init__(
+        self,
+        ledger: Ledger,
+        session_id: Optional[str] = None,
+        circuit_breaker: Optional[CircuitBreaker] = None,
+        on_soft_limit: Optional[Any] = None,
+        on_hard_limit: Optional[Any] = None,
+        on_loop_detected: Optional[Any] = None,
+    ):
         self._ledger = ledger
         self._session_id = session_id or generate_session_id()
+        self._circuit_breaker = circuit_breaker or CircuitBreaker()
+        self._on_soft_limit = on_soft_limit
+        self._on_hard_limit = on_hard_limit
+        self._on_loop_detected = on_loop_detected
         self._start_time: Optional[float] = None
         self._end_time: Optional[float] = None
         self._terminated_by: Optional[str] = None
@@ -46,6 +67,27 @@ class BudgetSession:
         self._end_time = time.time()
         if exc_type and exc_type.__name__ == "BudgetExhausted":
             self._terminated_by = "budget_exhausted"
+            if self._on_hard_limit:
+                self._on_hard_limit(self.report())
+        elif exc_type and exc_type.__name__ == "LoopDetected":
+            self._terminated_by = "loop_detected"
+
+    def _check_after_record(self, call_key: Optional[str] = None) -> None:
+        """Run circuit breaker checks after recording a cost event."""
+        # Soft limit check
+        warning = self._circuit_breaker.check_budget(
+            self._ledger.spent, self._ledger.budget
+        )
+        if warning and self._on_soft_limit:
+            self._on_soft_limit(self.report())
+
+        # Loop detection
+        if call_key:
+            if self._circuit_breaker.check_loop(call_key):
+                self._terminated_by = "loop_detected"
+                if self._on_loop_detected:
+                    self._on_loop_detected(self.report())
+                raise LoopDetected(call_key)
 
     def wrap(self, response: T) -> T:
         """Wrap an LLM API response and record its cost.
@@ -69,6 +111,7 @@ class BudgetSession:
                 output_tokens=output_tokens,
             )
             self._ledger.record(event)
+            self._check_after_record(call_key=model)
 
         return response
 
@@ -91,6 +134,7 @@ class BudgetSession:
             metadata=metadata,
         )
         self._ledger.record(event)
+        self._check_after_record(call_key=tool_name)
         return result
 
     def report(self) -> dict[str, Any]:

@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from agentbudget import AgentBudget, BudgetExhausted
+from agentbudget import AgentBudget, BudgetExhausted, LoopDetected
 
 
 class FakeUsage:
@@ -88,3 +88,47 @@ def test_shorthand_constructor():
     """AgentBudget('$2.00') should work as a quick one-liner."""
     budget = AgentBudget("$2.00")
     assert budget.max_spend == 2.0
+
+
+def test_loop_detection_fires():
+    """Circuit breaker should kill session on repeated tool calls."""
+    budget = AgentBudget(max_spend="$50.00", max_repeated_calls=3)
+
+    with pytest.raises(LoopDetected):
+        with budget.session() as session:
+            for _ in range(10):
+                session.track("result", cost=0.01, tool_name="stuck_tool")
+
+    report = session.report()
+    assert report["terminated_by"] == "loop_detected"
+
+
+def test_soft_limit_callback():
+    """on_soft_limit should fire when 90% budget is used."""
+    warnings = []
+    budget = AgentBudget(
+        max_spend="$1.00",
+        soft_limit=0.5,
+        on_soft_limit=lambda report: warnings.append(report),
+    )
+
+    with budget.session() as session:
+        session.track("a", cost=0.60, tool_name="tool_a")
+
+    assert len(warnings) == 1
+    assert warnings[0]["total_spent"] == 0.60
+
+
+def test_on_loop_detected_callback():
+    """on_loop_detected callback should fire before raising."""
+    loop_reports = []
+    budget = AgentBudget(
+        max_spend="$50.00",
+        max_repeated_calls=2,
+        on_loop_detected=lambda report: loop_reports.append(report),
+    )
+
+    with pytest.raises(LoopDetected):
+        with budget.session() as session:
+            for _ in range(5):
+                session.track("x", cost=0.01, tool_name="loopy")
