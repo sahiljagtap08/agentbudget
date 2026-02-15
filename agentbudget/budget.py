@@ -5,7 +5,7 @@ from typing import Callable, Optional
 from .circuit_breaker import CircuitBreaker, LoopDetectorConfig
 from .exceptions import InvalidBudget
 from .ledger import Ledger
-from .session import BudgetSession
+from .session import AsyncBudgetSession, BudgetSession
 
 
 def parse_budget(value: str | float | int) -> float:
@@ -75,6 +75,22 @@ class AgentBudget:
             loop_config=self._loop_config,
         )
         return BudgetSession(
+            ledger=ledger,
+            session_id=session_id,
+            circuit_breaker=circuit_breaker,
+            on_soft_limit=self._on_soft_limit,
+            on_hard_limit=self._on_hard_limit,
+            on_loop_detected=self._on_loop_detected,
+        )
+
+    def async_session(self, session_id: Optional[str] = None) -> AsyncBudgetSession:
+        """Create a new async budget session."""
+        ledger = Ledger(budget=self._budget)
+        circuit_breaker = CircuitBreaker(
+            soft_limit_fraction=self._soft_limit,
+            loop_config=self._loop_config,
+        )
+        return AsyncBudgetSession(
             ledger=ledger,
             session_id=session_id,
             circuit_breaker=circuit_breaker,
