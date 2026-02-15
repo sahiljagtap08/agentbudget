@@ -13,6 +13,8 @@ Usage:
 Requires: langchain-core (optional dependency)
 """
 
+from __future__ import annotations
+
 from typing import Any, Optional
 
 from ..budget import AgentBudget, parse_budget
