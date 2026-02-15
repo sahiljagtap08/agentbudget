@@ -21,14 +21,24 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
 ]
 
+[project.urls]
+Homepage = "https://github.com/sahiljagtap08/agentbudget"
+Repository = "https://github.com/sahiljagtap08/agentbudget"
+Issues = "https://github.com/sahiljagtap08/agentbudget/issues"
+
 [project.optional-dependencies]
+langchain = ["langchain-core>=0.1.0"]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "pytest-asyncio>=0.23.0",
+    "build>=1.0",
+    "twine>=5.0",
 ]
 
 [tool.pytest.ini_options]
