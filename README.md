@@ -1,6 +1,8 @@
-# AgentBudget SDK
+# AgentBudget SDK 
 
 ### Real-time cost enforcement for AI agent sessions.
+
+https://pypi.org/project/agentbudget/ 
 
 ---
 
