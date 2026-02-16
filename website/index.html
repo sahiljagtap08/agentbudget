@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentBudget - Real-time cost enforcement for AI agents</title>
+    <meta name="description" content="Open-source Python SDK that puts a hard dollar limit on any AI agent session. One line to set a budget. Zero infrastructure to manage.">
+    <meta property="og:title" content="AgentBudget - The ulimit for AI agents">
+    <meta property="og:description" content="Real-time cost enforcement for AI agent sessions. Stop runaway LLM spend with one line of code.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agentbudget.org">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text: #fafafa;
+            --text-secondary: #a1a1aa;
+            --accent: #22c55e;
+            --accent-dim: #16a34a;
+            --code-bg: #1a1a2e;
+            --red: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+        /* Nav */
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+        }
+        nav .logo span { color: var(--accent); }
+        nav .links { display: flex; gap: 24px; align-items: center; }
+        nav .links a { color: var(--text-secondary); font-size: 14px; font-weight: 500; }
+        nav .links a:hover { color: var(--text); text-decoration: none; }
+        .gh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text) !important;
+            transition: border-color 0.2s;
+        }
+        .gh-btn:hover { border-color: var(--text-secondary); text-decoration: none; }
+        .gh-btn svg { width: 16px; height: 16px; fill: var(--text); }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        .hero .badge {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+        .hero h1 .highlight { color: var(--accent); }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #000;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 12px 28px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover { background: var(--accent-dim); text-decoration: none; }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 12px 28px;
+            border-radius: 8px;
+            transition: border-color 0.2s;
+        }
+        .btn-secondary:hover { border-color: var(--text-secondary); text-decoration: none; }
+
+        /* Install bar */
+        .install-bar {
+            margin: 40px auto 0;
+            max-width: 420px;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .install-bar code { color: var(--text-secondary); }
+        .install-bar code span { color: var(--accent); }
+        .install-bar button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 13px;
+        }
+        .install-bar button:hover { color: var(--text); }
+
+        /* Code block */
+        .code-section { padding: 60px 0; }
+        .code-section h2 {
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .kw { color: #c792ea; }
+        .fn { color: #82aaff; }
+        .str { color: #c3e88d; }
+        .cm { color: #546e7a; }
+        .num { color: #f78c6c; }
+
+        /* Problem */
+        .problem {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+        .problem h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+        .problem > .container > p {
+            color: var(--text-secondary);
+            font-size: 17px;
+            max-width: 640px;
+            margin-bottom: 48px;
+        }
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .problem-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+        .problem-card .icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .problem-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .problem-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+        .features h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            letter-spacing: -0.01em;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .feature {
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        .feature h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .feature p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .cta h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .cta p {
+            color: var(--text-secondary);
+            font-size: 17px;
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+        }
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        footer p { color: var(--text-secondary); font-size: 13px; }
+        footer .links { display: flex; gap: 20px; }
+        footer .links a { color: var(--text-secondary); font-size: 13px; }
+
+        @media (max-width: 640px) {
+            .hero { padding: 60px 0 40px; }
+            .problem, .features, .cta { padding: 48px 0; }
+            footer .container { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">Agent<span>Budget</span></div>
+            <div class="links">
+                <a href="/docs">Docs</a>
+                <a href="https://pypi.org/project/agentbudget/">PyPI</a>
+                <a href="https://github.com/sahiljagtap08/agentbudget" class="gh-btn">
+                    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="badge">Open Source &middot; Python SDK</div>
+            <h1>The <span class="highlight">ulimit</span> for<br>AI agent spend</h1>
+            <p>One line of code. Hard dollar limit on any AI agent session. Real-time enforcement across LLM calls, tool calls, and external APIs.</p>
+            <div class="hero-actions">
+                <a href="https://github.com/sahiljagtap08/agentbudget" class="btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    Star on GitHub
+                </a>
+                <a href="/docs" class="btn-secondary">Read the Docs</a>
+            </div>
+            <div class="install-bar">
+                <code>$ <span>pip install</span> agentbudget</code>
+                <button onclick="navigator.clipboard.writeText('pip install agentbudget')" title="Copy">
+                    Copy
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="code-section">
+        <div class="container">
+            <h2>Two lines. That's it.</h2>
+            <pre><code><span class="kw">import</span> agentbudget
+
+agentbudget.init(<span class="str">"$5.00"</span>)
+
+<span class="cm"># Your existing code. Zero changes.</span>
+client = openai.OpenAI()
+response = client.chat.completions.create(
+    model=<span class="str">"gpt-4o"</span>,
+    messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="str">"Analyze this market..."</span>}]
+)
+<span class="cm"># ^ Automatically tracked. Budget enforced. Done.</span>
+
+<span class="fn">print</span>(agentbudget.remaining())  <span class="cm"># $4.99</span>
+<span class="fn">print</span>(agentbudget.report())     <span class="cm"># Full cost breakdown</span></code></pre>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container">
+            <h2>Agents are unpredictable by design.<br>Your bill shouldn't be.</h2>
+            <p>Traditional software has deterministic costs. Agent software doesn't. An agent might make 3 LLM calls or 300. AgentBudget makes that safe.</p>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="icon">&#x1f504;</div>
+                    <h3>The Loop Problem</h3>
+                    <p>Agent gets stuck retrying the same call. 200 LLM calls in 10 minutes. $50-$200 before anyone notices.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">&#x1f4b8;</div>
+                    <h3>The Invisible Spend</h3>
+                    <p>Tokens aren't dollars. GPT-4o costs 15x more than GPT-4o-mini. Mix in tool calls, and no one knows the real cost.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">&#x1f310;</div>
+                    <h3>Multi-Provider Chaos</h3>
+                    <p>One session calls OpenAI, Anthropic, Google, and 3 APIs. Each has its own billing. No unified real-time view.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">&#x1f4c8;</div>
+                    <h3>The Scaling Problem</h3>
+                    <p>1,000 concurrent sessions. 5% failure rate = 50 runaway agents. Without per-session limits, your bill is your worst case times your user count.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Everything you need. Nothing you don't.</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <h3>Drop-in Auto-Tracking</h3>
+                    <p>One line patches OpenAI and Anthropic. Your existing code stays untouched.</p>
+                </div>
+                <div class="feature">
+                    <h3>Dollar-Denominated</h3>
+                    <p>Tracks real dollars, not tokens. Across LLM calls, tool calls, and external APIs in one balance.</p>
+                </div>
+                <div class="feature">
+                    <h3>Circuit Breaker</h3>
+                    <p>Soft limit warnings, hard limit enforcement, and automatic loop detection. Kills runaway sessions.</p>
+                </div>
+                <div class="feature">
+                    <h3>Multi-Provider</h3>
+                    <p>Built-in pricing for OpenAI, Anthropic, Google Gemini, Mistral, and Cohere models.</p>
+                </div>
+                <div class="feature">
+                    <h3>Async Native</h3>
+                    <p>Full async/await support. Works with async agents and concurrent sessions.</p>
+                </div>
+                <div class="feature">
+                    <h3>Nested Budgets</h3>
+                    <p>Parent sessions allocate sub-budgets to child agents. Costs roll up automatically.</p>
+                </div>
+                <div class="feature">
+                    <h3>Framework Integrations</h3>
+                    <p>LangChain callback, CrewAI middleware. Drop into your existing agent framework.</p>
+                </div>
+                <div class="feature">
+                    <h3>Webhooks</h3>
+                    <p>Stream budget events to your observability stack. Pipe cost reports to Slack, Datadog, or billing.</p>
+                </div>
+                <div class="feature">
+                    <h3>Zero Infrastructure</h3>
+                    <p>No Redis. No servers. No cloud account. It's a library that runs in your process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ship your agents with confidence.</h2>
+            <p>Set a budget. Move on.</p>
+            <div class="hero-actions">
+                <a href="https://github.com/sahiljagtap08/agentbudget" class="btn-primary">
+                    Get Started
+                </a>
+                <a href="/docs" class="btn-secondary">Read the Docs</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>AgentBudget &middot; Apache 2.0 &middot; Built by <a href="https://github.com/sahiljagtap08">Sahil Jagtap</a></p>
+            <div class="links">
+                <a href="https://github.com/sahiljagtap08/agentbudget">GitHub</a>
+                <a href="https://pypi.org/project/agentbudget/">PyPI</a>
+                <a href="/docs">Docs</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
