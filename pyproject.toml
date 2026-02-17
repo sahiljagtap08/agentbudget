@@ -27,8 +27,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://agentbudget.org"
-Documentation = "https://agentbudget.org/docs"
+Homepage = "https://agentbudget.dev"
+Documentation = "https://agentbudget.dev/docs"
 Repository = "https://github.com/sahiljagtap08/agentbudget"
 Issues = "https://github.com/sahiljagtap08/agentbudget/issues"
 Changelog = "https://github.com/sahiljagtap08/agentbudget/releases"

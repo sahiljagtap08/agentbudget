@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title: "AgentBudget - The ulimit for AI agents",
     description:
       "Real-time cost enforcement for AI agent sessions. Stop runaway LLM spend with one line of code.",
-    url: "https://agentbudget.org",
+    url: "https://agentbudget.dev",
     type: "website",
   },
 };
