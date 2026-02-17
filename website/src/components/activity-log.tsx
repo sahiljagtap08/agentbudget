@@ -17,7 +17,7 @@ const logEntries: LogEntry[] = [
   { time: "14:23:05", tag: "LLM", tagColor: "text-accent-bright", message: "gpt-4o \u00b7 2,104 tokens \u00b7 cost:", highlight: "$0.0073" },
   { time: "14:23:06", tag: "COST", tagColor: "text-accent-bright", message: "Running total: $0.0202 \u00b7 remaining:", highlight: "$4.98" },
   { time: "14:23:08", tag: "LLM", tagColor: "text-accent-bright", message: "gpt-4o-mini \u00b7 512 tokens \u00b7 cost:", highlight: "$0.0004" },
-  { time: "14:24:51", tag: "WARN", tagColor: "text-accent-orange", message: "Soft limit reached \u00b7 90% budget used \u00b7", highlight: "$4.52 spent" },
+  { time: "14:24:51", tag: "WARN", tagColor: "text-accent-bright", message: "Soft limit reached \u00b7 90% budget used \u00b7", highlight: "$4.52 spent" },
   { time: "14:25:12", tag: "INFO", tagColor: "text-accent", message: "Session ended \u00b7 total: $4.71 \u00b7 23 calls \u00b7", highlight: "14.2s" },
 ];
 
