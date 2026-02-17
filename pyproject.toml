@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentbudget"
-version = "0.1.0"
+version = "0.2.0"
 description = "Real-time cost enforcement for AI agent sessions"
 readme = "README.md"
 license = "Apache-2.0"
@@ -27,9 +27,11 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/sahiljagtap08/agentbudget"
+Homepage = "https://agentbudget.org"
+Documentation = "https://agentbudget.org/docs"
 Repository = "https://github.com/sahiljagtap08/agentbudget"
 Issues = "https://github.com/sahiljagtap08/agentbudget/issues"
+Changelog = "https://github.com/sahiljagtap08/agentbudget/releases"
 
 [project.optional-dependencies]
 langchain = ["langchain-core>=0.1.0"]
