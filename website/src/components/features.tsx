@@ -112,7 +112,7 @@ const features = [
 ];
 
 const accentMap: Record<string, string> = {
-  green: "from-accent-green to-accent-green/70",
+  green: "from-accent to-accent-bright",
   orange: "from-accent-orange to-accent-orange/70",
   pink: "from-accent-pink to-accent-pink/70",
   yellow: "from-accent-yellow to-accent-yellow/70",
@@ -123,7 +123,7 @@ export function Features() {
   return (
     <section className="border-x border-t border-border">
       <div className="mx-auto max-w-[1200px] px-6 pt-20 pb-0">
-        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-green">
+        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-bright">
           Features
         </p>
         <h2 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -154,7 +154,7 @@ export function Features() {
               </p>
               <Link
                 href={f.href}
-                className="inline-flex items-center gap-1 text-[13px] font-medium text-accent-green transition-all group-hover:gap-2 hover:no-underline"
+                className="inline-flex items-center gap-1 text-[13px] font-medium text-accent-bright transition-all group-hover:gap-2 hover:no-underline"
               >
                 Learn more
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
