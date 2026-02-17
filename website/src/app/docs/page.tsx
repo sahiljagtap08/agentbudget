@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Nav } from "@/components/nav";
+import { CodeBlock } from "@/components/code-block";
 import { useState } from "react";
 
 const sidebarSections = [
@@ -48,14 +49,6 @@ const sidebarSections = [
     ],
   },
 ];
-
-function Code({ children }: { children: string }) {
-  return (
-    <pre className="overflow-x-auto rounded-lg border border-border bg-code-bg p-5 font-mono text-[13px] leading-7">
-      <code>{children}</code>
-    </pre>
-  );
-}
 
 export default function DocsPage() {
   const [mobileNav, setMobileNav] = useState(false);
@@ -129,14 +122,14 @@ export default function DocsPage() {
           <h2 id="installation" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             Installation
           </h2>
-          <Code>{`pip install agentbudget`}</Code>
+          <CodeBlock lang="bash">{`pip install agentbudget`}</CodeBlock>
           <p className="mt-4 text-[14px] text-muted-foreground">
             Requires Python 3.9+. No external dependencies.
           </p>
           <p className="mt-2 text-[14px] text-muted-foreground">
             For LangChain integration:
           </p>
-          <Code>{`pip install agentbudget[langchain]`}</Code>
+          <CodeBlock lang="bash">{`pip install agentbudget[langchain]`}</CodeBlock>
 
           {/* Quickstart */}
           <h2 id="quickstart" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
@@ -154,7 +147,7 @@ export default function DocsPage() {
           <p className="mb-4 text-[14px] text-muted-foreground">
             Add two lines to the top of your script. Every OpenAI and Anthropic call is tracked automatically.
           </p>
-          <Code>{`import agentbudget
+          <CodeBlock>{`import agentbudget
 import openai
 
 agentbudget.init("$5.00")
@@ -170,7 +163,7 @@ print(agentbudget.spent())      # e.g. 0.0035
 print(agentbudget.remaining())  # e.g. 4.9965
 print(agentbudget.report())     # Full cost breakdown
 
-agentbudget.teardown()  # Stop tracking, get final report`}</Code>
+agentbudget.teardown()  # Stop tracking, get final report`}</CodeBlock>
 
           <div className="mt-4 rounded-lg border-l-2 border-accent bg-accent/5 px-4 py-3 text-[13px] text-muted-foreground">
             <strong className="text-foreground">How it works:</strong>{" "}
@@ -203,7 +196,7 @@ agentbudget.teardown()  # Stop tracking, get final report`}</Code>
 
           {/* Manual Mode */}
           <h3 id="manual" className="mb-4 mt-10 text-lg font-semibold">Manual Mode</h3>
-          <Code>{`from agentbudget import AgentBudget
+          <CodeBlock>{`from agentbudget import AgentBudget
 
 budget = AgentBudget(max_spend="$5.00")
 
@@ -221,7 +214,7 @@ with budget.session() as session:
     def my_search(query):
         return api.search(query)
 
-print(session.report())`}</Code>
+print(session.report())`}</CodeBlock>
 
           {/* Budget Envelope */}
           <h2 id="budget-envelope" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
@@ -230,11 +223,11 @@ print(session.report())`}</Code>
           <p className="mb-4 text-[14px] text-muted-foreground">
             A budget envelope is a dollar amount assigned to a unit of work. Every cost is tracked in real time. When exhausted, <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">BudgetExhausted</code> is raised.
           </p>
-          <Code>{`# All of these work:
+          <CodeBlock>{`# All of these work:
 AgentBudget(max_spend="$5.00")
 AgentBudget(max_spend="5.00")
 AgentBudget(max_spend=5.0)
-AgentBudget(max_spend=5)`}</Code>
+AgentBudget(max_spend=5)`}</CodeBlock>
 
           {/* Cost Sources */}
           <h2 id="cost-sources" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
@@ -251,7 +244,7 @@ AgentBudget(max_spend=5)`}</Code>
             Circuit Breaker
           </h2>
           <p className="mb-4 text-[14px] text-muted-foreground">Three levels of protection:</p>
-          <Code>{`budget = AgentBudget(
+          <CodeBlock>{`budget = AgentBudget(
     max_spend="$5.00",
     soft_limit=0.9,               # Warn at 90%
     max_repeated_calls=10,        # Trip after 10 repeated calls
@@ -259,7 +252,7 @@ AgentBudget(max_spend=5)`}</Code>
     on_soft_limit=lambda r: print("Warning: 90% budget used"),
     on_hard_limit=lambda r: alert_ops_team(r),
     on_loop_detected=lambda r: print("Loop detected!"),
-)`}</Code>
+)`}</CodeBlock>
           <ul className="mt-4 list-inside list-disc space-y-2 text-[14px] text-muted-foreground">
             <li><strong className="text-foreground">Soft limit</strong> (default 90%) — Fires a callback. Agent can wrap up gracefully.</li>
             <li><strong className="text-foreground">Hard limit</strong> (100%) — Raises <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">BudgetExhausted</code>. No more calls.</li>
@@ -270,7 +263,7 @@ AgentBudget(max_spend=5)`}</Code>
           <h2 id="cost-report" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             Cost Report
           </h2>
-          <Code>{`{
+          <CodeBlock lang="json">{`{
     "session_id": "sess_abc123",
     "budget": 5.00,
     "total_spent": 3.42,
@@ -282,13 +275,13 @@ AgentBudget(max_spend=5)`}</Code>
     "duration_seconds": 34.2,
     "terminated_by": null,
     "events": [...]
-}`}</Code>
+}`}</CodeBlock>
 
           {/* Async */}
           <h2 id="async" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             Async Support
           </h2>
-          <Code>{`from agentbudget import AgentBudget
+          <CodeBlock>{`from agentbudget import AgentBudget
 
 budget = AgentBudget(max_spend="$5.00")
 
@@ -302,7 +295,7 @@ async with budget.async_session() as session:
 
     @session.track_tool(cost=0.01)
     async def async_search(query):
-        return await api.search(query)`}</Code>
+        return await api.search(query)`}</CodeBlock>
 
           {/* Nested Budgets */}
           <h2 id="nested-budgets" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
@@ -311,13 +304,13 @@ async with budget.async_session() as session:
           <p className="mb-4 text-[14px] text-muted-foreground">
             Parent sessions allocate sub-budgets to child tasks. When the child finishes, its total spend is charged to the parent.
           </p>
-          <Code>{`with budget.session() as parent:
+          <CodeBlock>{`with budget.session() as parent:
     child = parent.child_session(max_spend=2.0)
     with child:
         child.track("result", cost=1.50, tool_name="sub_task")
 
     print(parent.spent)      # 1.50
-    print(parent.remaining)  # 8.50`}</Code>
+    print(parent.remaining)  # 8.50`}</CodeBlock>
           <div className="mt-4 rounded-lg border-l-2 border-accent bg-accent/5 px-4 py-3 text-[13px] text-muted-foreground">
             The child budget is automatically capped at the lesser of <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">max_spend</code> and the parent&apos;s remaining balance.
           </div>
@@ -326,10 +319,10 @@ async with budget.async_session() as session:
           <h2 id="webhooks" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             Webhooks
           </h2>
-          <Code>{`budget = AgentBudget(
+          <CodeBlock>{`budget = AgentBudget(
     max_spend="$5.00",
     webhook_url="https://your-app.com/api/budget-events",
-)`}</Code>
+)`}</CodeBlock>
           <p className="mt-4 text-[14px] text-muted-foreground">
             Events are sent as JSON POST requests with <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">event_type</code> ({'"'}soft_limit{'"'}, {'"'}hard_limit{'"'}, {'"'}loop_detected{'"'}) and the full cost report. Failures are logged but never raise.
           </p>
@@ -338,12 +331,12 @@ async with budget.async_session() as session:
           <h2 id="callbacks" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             Event Callbacks
           </h2>
-          <Code>{`budget = AgentBudget(
+          <CodeBlock>{`budget = AgentBudget(
     max_spend="$5.00",
     on_soft_limit=lambda r: logger.warning(f"90% used: {r}"),
     on_hard_limit=lambda r: alert_ops_team(r),
     on_loop_detected=lambda r: logger.error(f"Loop: {r}"),
-)`}</Code>
+)`}</CodeBlock>
           <p className="mt-4 text-[14px] text-muted-foreground">
             When <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">webhook_url</code> is also set, both your callback and the webhook fire.
           </p>
@@ -352,8 +345,8 @@ async with budget.async_session() as session:
           <h2 id="langchain" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             LangChain Integration
           </h2>
-          <Code>{`pip install agentbudget[langchain]`}</Code>
-          <Code>{`from agentbudget.integrations.langchain import LangChainBudgetCallback
+          <CodeBlock lang="bash">{`pip install agentbudget[langchain]`}</CodeBlock>
+          <CodeBlock>{`from agentbudget.integrations.langchain import LangChainBudgetCallback
 
 callback = LangChainBudgetCallback(budget="$5.00")
 
@@ -362,13 +355,13 @@ agent.run(
     callbacks=[callback]
 )
 
-print(callback.get_report())`}</Code>
+print(callback.get_report())`}</CodeBlock>
 
           {/* CrewAI */}
           <h2 id="crewai" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             CrewAI Integration
           </h2>
-          <Code>{`from agentbudget.integrations.crewai import CrewAIBudgetMiddleware
+          <CodeBlock>{`from agentbudget.integrations.crewai import CrewAIBudgetMiddleware
 
 with CrewAIBudgetMiddleware(budget="$3.00") as middleware:
     result = middleware.track(
@@ -377,7 +370,7 @@ with CrewAIBudgetMiddleware(budget="$3.00") as middleware:
         tool_name="crew_run"
     )
 
-print(middleware.get_report())`}</Code>
+print(middleware.get_report())`}</CodeBlock>
 
           {/* API Reference */}
           <h2 id="api-reference" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
@@ -385,7 +378,7 @@ print(middleware.get_report())`}</Code>
           </h2>
 
           <h3 className="mb-3 mt-6 text-base font-semibold">AgentBudget</h3>
-          <Code>{`AgentBudget(
+          <CodeBlock>{`AgentBudget(
     max_spend: str | float | int,
     soft_limit: float = 0.9,
     max_repeated_calls: int = 10,
@@ -394,7 +387,7 @@ print(middleware.get_report())`}</Code>
     on_hard_limit: Callable = None,
     on_loop_detected: Callable = None,
     webhook_url: str = None,
-)`}</Code>
+)`}</CodeBlock>
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Method</th><th className="py-2 pr-4 text-left font-semibold">Returns</th><th className="py-2 text-left font-semibold">Description</th></tr></thead>

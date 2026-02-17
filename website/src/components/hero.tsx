@@ -1,6 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
 export function Hero() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("pip install agentbudget");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
   return (
     <section className="border-x border-border">
       <div className="mx-auto max-w-[1200px] px-6 pb-16 pt-24 md:pt-32">
@@ -15,7 +26,11 @@ export function Hero() {
 
         {/* Heading */}
         <h1 className="mb-6 max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-[68px]">
-          <span className="text-gradient-hero">COST ENFORCEMENT</span>
+          <span className="text-gradient-hero-animated">REAL-TIME</span>
+          <br />
+          <span className="text-gradient-hero-animated" style={{ animationDelay: "-1.5s" }}>
+            COST ENFORCEMENT
+          </span>
           <br />
           <span className="text-muted-foreground">FOR AI AGENTS</span>
         </h1>
@@ -47,12 +62,27 @@ export function Hero() {
           </Link>
         </div>
 
-        {/* Install command */}
-        <div className="mt-8 inline-flex items-center gap-3 rounded-lg border border-border bg-code-bg px-4 py-2.5 font-mono text-[13px]">
+        {/* Install command with copy */}
+        <button
+          onClick={handleCopy}
+          className="mt-8 inline-flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-code-bg px-4 py-2.5 font-mono text-[13px] transition-colors hover:border-border-bright"
+        >
           <span className="text-muted">$</span>
           <span className="text-accent-bright">pip install</span>
           <span className="text-muted-foreground">agentbudget</span>
-        </div>
+          <span className="ml-2 text-muted transition-colors hover:text-muted-foreground">
+            {copied ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+            )}
+          </span>
+        </button>
       </div>
     </section>
   );

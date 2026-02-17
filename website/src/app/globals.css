@@ -48,6 +48,21 @@ body {
   background-clip: text;
 }
 
+/* Animated moving gradient for hero text */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.text-gradient-hero-animated {
+  background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899, #eab308, #22c55e, #06b6d4);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 6s ease-in-out infinite;
+}
+
 /* Purple accent gradient for buttons */
 .bg-gradient-accent {
   background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
