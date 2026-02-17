@@ -42,11 +42,11 @@ export function PyPIDownloads() {
   const [downloads, setDownloads] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("https://pypistats.org/api/packages/agentbudget/recent")
+    fetch("/api/pypi-stats")
       .then((res) => res.json())
       .then((data) => {
-        if (data?.data?.last_month) {
-          const count = data.data.last_month;
+        if (typeof data?.downloads === "number") {
+          const count = data.downloads;
           setDownloads(count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count));
         }
       })
