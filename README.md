@@ -98,6 +98,8 @@ pip install agentbudget[langchain]
 | `agentbudget.remaining()` | Dollars left in the budget. |
 | `agentbudget.report()` | Full cost breakdown as a dict. |
 | `agentbudget.track(result, cost, tool_name)` | Manually track a tool/API call cost. |
+| `agentbudget.register_model(name, input, output)` | Add pricing for a new model at runtime. |
+| `agentbudget.register_models(dict)` | Batch register pricing for multiple models. |
 | `agentbudget.get_session()` | Get the active session for advanced use. |
 | `agentbudget.teardown()` | Stop tracking, unpatch SDKs, return final report. |
 
@@ -213,17 +215,39 @@ with budget.session() as s:
 
 ## Supported Models
 
-Built-in pricing for 30+ models across OpenAI, Anthropic, Google Gemini, Mistral, and Cohere.
+Built-in pricing for 40+ models across OpenAI, Anthropic, Google Gemini, Mistral, and Cohere.
 
 | Provider | Models |
 |---|---|
-| **OpenAI** | gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-4, gpt-3.5-turbo, o1, o1-mini, o3-mini |
-| **Anthropic** | claude-3-5-sonnet, claude-3-5-haiku, claude-3-opus, claude-3-sonnet, claude-3-haiku |
-| **Google** | gemini-1.5-pro, gemini-1.5-flash, gemini-2.0-flash, gemini-1.0-pro |
+| **OpenAI** | gpt-4.1, gpt-4.1-mini, gpt-4.1-nano, gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-4, gpt-3.5-turbo, o1, o1-mini, o3, o3-pro, o4-mini |
+| **Anthropic** | claude-opus-4-6, claude-opus-4-5, claude-sonnet-4-5, claude-sonnet-4, claude-haiku-4-5, claude-3-opus, claude-3-sonnet, claude-3-haiku |
+| **Google** | gemini-2.5-pro, gemini-2.5-flash, gemini-2.5-flash-lite, gemini-2.0-flash, gemini-1.5-pro, gemini-1.5-flash |
 | **Mistral** | mistral-large, mistral-small, mistral-medium, codestral, open-mistral-nemo |
 | **Cohere** | command-r-plus, command-r, command, command-light |
 
-Missing a model? Pricing data is in `agentbudget/pricing.py`. PRs welcome.
+### Custom Model Pricing
+
+New model just launched? Don't wait for a release — register it at runtime:
+
+```python
+import agentbudget
+
+agentbudget.register_model(
+    "gpt-5",
+    input_price_per_million=5.00,
+    output_price_per_million=20.00,
+)
+
+# Or batch register multiple models:
+agentbudget.register_models({
+    "gpt-5": (5.00, 20.00),
+    "gpt-5-mini": (0.50, 2.00),
+})
+```
+
+Dated model variants (e.g. `gpt-4o-2025-06-15`) are automatically matched to their base model pricing.
+
+Missing a model from built-in pricing? PRs welcome — pricing data is in `agentbudget/pricing.py`.
 
 ---
 

@@ -67,12 +67,87 @@ MODEL_PRICING: dict[str, tuple[float, float]] = {
 }
 
 
+_custom_pricing: dict[str, tuple[float, float]] = {}
+
+
+def register_model(
+    model: str,
+    input_price_per_million: float,
+    output_price_per_million: float,
+) -> None:
+    """Register custom pricing for a model.
+
+    Use this when a new model launches before AgentBudget ships an update,
+    or to override built-in pricing.
+
+    Args:
+        model: Model name exactly as passed to the provider SDK.
+        input_price_per_million: Cost in USD per 1M input tokens.
+        output_price_per_million: Cost in USD per 1M output tokens.
+
+    Example::
+
+        agentbudget.register_model("gpt-5", input_price_per_million=5.00, output_price_per_million=15.00)
+    """
+    _custom_pricing[model] = (
+        input_price_per_million / 1_000_000,
+        output_price_per_million / 1_000_000,
+    )
+
+
+def register_models(models: dict[str, tuple[float, float]]) -> None:
+    """Register pricing for multiple models at once.
+
+    Args:
+        models: Dict of model name -> (input_price_per_million, output_price_per_million).
+
+    Example::
+
+        agentbudget.register_models({
+            "gpt-5": (5.00, 15.00),
+            "gpt-5-mini": (0.50, 1.50),
+        })
+    """
+    for model, (inp, out) in models.items():
+        register_model(model, inp, out)
+
+
+def _fuzzy_match(model: str) -> Optional[tuple[float, float]]:
+    """Try to match a dated model variant to its base model.
+
+    For example, 'gpt-4o-2025-03-01' matches 'gpt-4o'.
+    """
+    # Try progressively shorter prefixes by stripping trailing segments
+    parts = model.rsplit("-", 1)
+    while len(parts) == 2:
+        prefix = parts[0]
+        # Check custom first, then built-in
+        if prefix in _custom_pricing:
+            return _custom_pricing[prefix]
+        if prefix in MODEL_PRICING:
+            return MODEL_PRICING[prefix]
+        parts = prefix.rsplit("-", 1)
+    return None
+
+
 def get_model_pricing(model: str) -> Optional[tuple[float, float]]:
     """Look up per-token pricing for a model.
 
+    Resolution order:
+    1. Custom pricing (registered via register_model)
+    2. Built-in pricing table
+    3. Fuzzy match (strip date suffixes to find base model)
+
     Returns (input_price_per_token, output_price_per_token) or None if unknown.
     """
-    return MODEL_PRICING.get(model)
+    # 1. Custom pricing takes priority
+    if model in _custom_pricing:
+        return _custom_pricing[model]
+    # 2. Built-in table
+    if model in MODEL_PRICING:
+        return MODEL_PRICING[model]
+    # 3. Fuzzy match dated variants
+    return _fuzzy_match(model)
 
 
 def calculate_llm_cost(

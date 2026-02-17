@@ -44,6 +44,7 @@ const sidebarSections = [
     items: [
       { label: "API Reference", id: "api-reference" },
       { label: "Supported Models", id: "supported-models" },
+      { label: "Custom Model Pricing", id: "custom-pricing" },
       { label: "Exceptions", id: "exceptions" },
     ],
   },
@@ -187,6 +188,8 @@ agentbudget.teardown()  # Stop tracking, get final report`}</CodeBlock>
                 <tr className="border-b border-border"><td className="py-2 pr-4"><code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.remaining()</code></td><td className="py-2">Dollars left in the budget.</td></tr>
                 <tr className="border-b border-border"><td className="py-2 pr-4"><code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.report()</code></td><td className="py-2">Full cost breakdown as a dict.</td></tr>
                 <tr className="border-b border-border"><td className="py-2 pr-4"><code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.track(result, cost, tool_name)</code></td><td className="py-2">Manually track a tool/API call cost.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.register_model(name, input, output)</code></td><td className="py-2">Add pricing for a new model at runtime.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.register_models(dict)</code></td><td className="py-2">Batch register pricing for multiple models.</td></tr>
                 <tr className="border-b border-border"><td className="py-2 pr-4"><code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.get_session()</code></td><td className="py-2">Get the active session for advanced use.</td></tr>
                 <tr className="border-b border-border"><td className="py-2 pr-4"><code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.teardown()</code></td><td className="py-2">Stop tracking, unpatch SDKs, return final report.</td></tr>
               </tbody>
@@ -479,7 +482,39 @@ print(middleware.get_report())`}</CodeBlock>
           </div>
 
           <div className="border-l-2 border-accent bg-accent/5 px-4 py-3 text-[13px] text-muted-foreground">
-            Missing a model? Pricing data is in <code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget/pricing.py</code>. PRs welcome.
+            Missing a model? Register it at runtime with <code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">register_model()</code> or submit a PR to <code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget/pricing.py</code>.
+          </div>
+
+          {/* Custom Model Pricing */}
+          <h2 id="custom-pricing" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
+            Custom Model Pricing
+          </h2>
+          <p className="mb-4 text-[14px] text-muted-foreground">
+            New model just launched? Don{"'"}t wait for a release — register pricing at runtime.
+          </p>
+
+          <h3 className="mb-2 mt-6 text-sm font-semibold">Single model</h3>
+          <CodeBlock lang="python">{`import agentbudget
+
+agentbudget.register_model(
+    "gpt-5",
+    input_price_per_million=5.00,
+    output_price_per_million=20.00,
+)`}</CodeBlock>
+
+          <h3 className="mb-2 mt-6 text-sm font-semibold">Batch register</h3>
+          <CodeBlock lang="python">{`agentbudget.register_models({
+    "gpt-5": (5.00, 20.00),
+    "gpt-5-mini": (0.50, 2.00),
+})`}</CodeBlock>
+
+          <h3 className="mb-2 mt-6 text-sm font-semibold">Fuzzy matching</h3>
+          <p className="mb-3 text-[14px] text-muted-foreground">
+            Dated model variants are automatically matched to their base model. For example, <code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">gpt-4o-2025-06-15</code> automatically uses <code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">gpt-4o</code> pricing.
+          </p>
+
+          <div className="border-l-2 border-accent bg-accent/5 px-4 py-3 text-[13px] text-muted-foreground">
+            <strong className="text-foreground">Resolution order:</strong> Custom pricing (via <code className="bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">register_model</code>) → Built-in table → Fuzzy match (strip date suffixes).
           </div>
 
           {/* Exceptions */}

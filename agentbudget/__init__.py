@@ -1,10 +1,11 @@
 """AgentBudget - Real-time cost enforcement for AI agent sessions."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.2"
 
 from .budget import AgentBudget
 from .exceptions import AgentBudgetError, BudgetExhausted, InvalidBudget
 from .session import AsyncBudgetSession, BudgetSession, LoopDetected
+from .pricing import register_model, register_models
 
 # Drop-in auto-instrumentation API
 from ._global import (
@@ -26,6 +27,9 @@ __all__ = [
     "BudgetSession",
     "InvalidBudget",
     "LoopDetected",
+    # Pricing
+    "register_model",
+    "register_models",
     # Drop-in API
     "init",
     "teardown",
