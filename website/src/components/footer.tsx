@@ -6,6 +6,7 @@ const columns = [
     links: [
       { label: "Documentation", href: "/docs" },
       { label: "PyPI Package", href: "https://pypi.org/project/agentbudget/" },
+      { label: "PyPI Stats", href: "https://pypistats.org/packages/agentbudget" },
       { label: "Changelog", href: "https://github.com/sahiljagtap08/agentbudget/releases" },
     ],
   },
