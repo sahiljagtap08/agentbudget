@@ -9,8 +9,8 @@ const problems = [
     title: "The Loop Problem",
     description:
       "Agent gets stuck retrying the same call. 200 LLM calls in 10 minutes. $50\u2013$200 before anyone notices.",
-    accent: "border-accent-orange/30 text-accent-orange",
-    bg: "bg-accent-orange/10",
+    accent: "border-accent/30 text-accent-bright",
+    bg: "bg-accent/10",
   },
   {
     icon: (
@@ -22,8 +22,8 @@ const problems = [
     title: "The Invisible Spend",
     description:
       "Tokens aren\u2019t dollars. GPT-4o costs 15x more than GPT-4o-mini. Mix in tool calls, nobody knows the real cost.",
-    accent: "border-accent-pink/30 text-accent-pink",
-    bg: "bg-accent-pink/10",
+    accent: "border-accent/30 text-accent-bright",
+    bg: "bg-accent/10",
   },
   {
     icon: (
@@ -36,8 +36,8 @@ const problems = [
     title: "Multi-Provider Chaos",
     description:
       "One session calls OpenAI, Anthropic, Google, and 3 APIs. Each has its own billing. No unified real-time view.",
-    accent: "border-accent-blue/30 text-accent-blue",
-    bg: "bg-accent-blue/10",
+    accent: "border-accent/30 text-accent-bright",
+    bg: "bg-accent/10",
   },
   {
     icon: (
@@ -48,7 +48,7 @@ const problems = [
     title: "The Scaling Problem",
     description:
       "1,000 concurrent sessions. 5% failure rate = 50 runaway agents. Your bill becomes your worst case times your user count.",
-    accent: "border-accent-yellow/30 text-accent-yellow",
+    accent: "border-accent/30 text-accent-bright",
     bg: "bg-accent-yellow/10",
   },
 ];
@@ -57,7 +57,7 @@ export function Problems() {
   return (
     <section className="border-x border-t border-border">
       <div className="mx-auto max-w-[1200px] px-6 py-20">
-        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-orange">
+        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-bright">
           The Problem
         </p>
         <h2 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">

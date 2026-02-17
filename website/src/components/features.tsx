@@ -111,13 +111,7 @@ const features = [
   },
 ];
 
-const accentMap: Record<string, string> = {
-  green: "from-accent to-accent-bright",
-  orange: "from-accent to-accent-bright",
-  pink: "from-accent to-accent-bright",
-  yellow: "from-accent to-accent-bright",
-  blue: "from-accent to-accent-bright",
-};
+const accentGradient = "from-accent to-accent-bright";
 
 export function Features() {
   return (
@@ -144,7 +138,7 @@ export function Features() {
               className="group border-b border-r border-border p-7 transition-colors hover:bg-surface"
             >
               <div
-                className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-gradient-to-br text-white ${accentMap[f.accent]}`}
+                className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-gradient-to-br text-white ${accentGradient}`}
               >
                 {f.icon}
               </div>
