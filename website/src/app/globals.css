@@ -8,7 +8,9 @@
   --color-border: #1c1c22;
   --color-border-bright: #2a2a32;
   --color-surface: #111114;
-  --color-accent-green: #22c55e;
+  --color-accent: #8b5cf6;
+  --color-accent-dim: #7c3aed;
+  --color-accent-bright: #a78bfa;
   --color-accent-orange: #f97316;
   --color-accent-pink: #ec4899;
   --color-accent-yellow: #eab308;
@@ -38,6 +40,27 @@ body {
 .tok-op { color: #ff7b72; }
 .tok-cls { color: #ffa657; }
 
+/* Multi-color hero gradient (teal → green → gold like the reference) */
+.text-gradient-hero {
+  background: linear-gradient(90deg, #06b6d4 0%, #22c55e 35%, #eab308 70%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Purple accent gradient for buttons */
+.bg-gradient-accent {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+}
+
+/* Purple gradient text */
+.text-gradient-accent {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Fade in animation */
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(12px); }
@@ -55,8 +78,8 @@ body {
 
 /* Pulse dot */
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(139,92,246,0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(139,92,246,0); }
 }
 
 /* Background noise texture */
