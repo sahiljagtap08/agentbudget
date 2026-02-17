@@ -49,7 +49,7 @@ const problems = [
     description:
       "1,000 concurrent sessions. 5% failure rate = 50 runaway agents. Your bill becomes your worst case times your user count.",
     accent: "border-accent/30 text-accent-bright",
-    bg: "bg-accent-yellow/10",
+    bg: "bg-accent/10",
   },
 ];
 
