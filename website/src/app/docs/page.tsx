@@ -418,18 +418,22 @@ print(middleware.get_report())`}</CodeBlock>
           <h2 id="supported-models" className="mb-4 mt-16 border-t border-border pt-8 text-xl font-semibold">
             Supported Models
           </h2>
-          <p className="mb-4 text-[14px] text-muted-foreground">Built-in pricing for 30+ models.</p>
+          <p className="mb-4 text-[14px] text-muted-foreground">Built-in pricing for 50+ models. Updated February 2026.</p>
 
           <h3 className="mb-2 mt-6 text-sm font-semibold text-accent-bright">OpenAI</h3>
           <div className="overflow-x-auto">
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
               <tbody className="text-muted-foreground">
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">gpt-4.1</td><td className="py-1.5 pr-4">$2.00</td><td className="py-1.5">$8.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">gpt-4.1-mini</td><td className="py-1.5 pr-4">$0.40</td><td className="py-1.5">$1.60</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">gpt-4.1-nano</td><td className="py-1.5 pr-4">$0.10</td><td className="py-1.5">$0.40</td></tr>
                 <tr className="border-b border-border"><td className="py-1.5 pr-4">gpt-4o</td><td className="py-1.5 pr-4">$2.50</td><td className="py-1.5">$10.00</td></tr>
                 <tr className="border-b border-border"><td className="py-1.5 pr-4">gpt-4o-mini</td><td className="py-1.5 pr-4">$0.15</td><td className="py-1.5">$0.60</td></tr>
-                <tr className="border-b border-border"><td className="py-1.5 pr-4">gpt-4-turbo</td><td className="py-1.5 pr-4">$10.00</td><td className="py-1.5">$30.00</td></tr>
-                <tr className="border-b border-border"><td className="py-1.5 pr-4">o1</td><td className="py-1.5 pr-4">$15.00</td><td className="py-1.5">$60.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">o3</td><td className="py-1.5 pr-4">$2.00</td><td className="py-1.5">$8.00</td></tr>
                 <tr className="border-b border-border"><td className="py-1.5 pr-4">o3-mini</td><td className="py-1.5 pr-4">$1.10</td><td className="py-1.5">$4.40</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">o4-mini</td><td className="py-1.5 pr-4">$1.10</td><td className="py-1.5">$4.40</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">o1</td><td className="py-1.5 pr-4">$15.00</td><td className="py-1.5">$60.00</td></tr>
               </tbody>
             </table>
           </div>
@@ -439,9 +443,11 @@ print(middleware.get_report())`}</CodeBlock>
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-3-5-sonnet</td><td className="py-1.5 pr-4">$3.00</td><td className="py-1.5">$15.00</td></tr>
-                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-3-5-haiku</td><td className="py-1.5 pr-4">$0.80</td><td className="py-1.5">$4.00</td></tr>
-                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-3-opus</td><td className="py-1.5 pr-4">$15.00</td><td className="py-1.5">$75.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-opus-4-6</td><td className="py-1.5 pr-4">$5.00</td><td className="py-1.5">$25.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-sonnet-4.5</td><td className="py-1.5 pr-4">$3.00</td><td className="py-1.5">$15.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-haiku-4.5</td><td className="py-1.5 pr-4">$1.00</td><td className="py-1.5">$5.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-3.5-sonnet</td><td className="py-1.5 pr-4">$3.00</td><td className="py-1.5">$15.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">claude-3.5-haiku</td><td className="py-1.5 pr-4">$0.80</td><td className="py-1.5">$4.00</td></tr>
               </tbody>
             </table>
           </div>
@@ -451,8 +457,10 @@ print(middleware.get_report())`}</CodeBlock>
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border"><td className="py-1.5 pr-4">gemini-1.5-pro</td><td className="py-1.5 pr-4">$1.25</td><td className="py-1.5">$5.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">gemini-2.5-pro</td><td className="py-1.5 pr-4">$1.25</td><td className="py-1.5">$10.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">gemini-2.5-flash</td><td className="py-1.5 pr-4">$0.30</td><td className="py-1.5">$2.50</td></tr>
                 <tr className="border-b border-border"><td className="py-1.5 pr-4">gemini-2.0-flash</td><td className="py-1.5 pr-4">$0.10</td><td className="py-1.5">$0.40</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">gemini-1.5-pro</td><td className="py-1.5 pr-4">$1.25</td><td className="py-1.5">$5.00</td></tr>
               </tbody>
             </table>
           </div>
@@ -462,7 +470,9 @@ print(middleware.get_report())`}</CodeBlock>
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border"><td className="py-1.5 pr-4">mistral-large</td><td className="py-1.5 pr-4">$2.00</td><td className="py-1.5">$6.00</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">mistral-large</td><td className="py-1.5 pr-4">$0.50</td><td className="py-1.5">$1.50</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">mistral-small</td><td className="py-1.5 pr-4">$0.03</td><td className="py-1.5">$0.11</td></tr>
+                <tr className="border-b border-border"><td className="py-1.5 pr-4">codestral</td><td className="py-1.5 pr-4">$0.30</td><td className="py-1.5">$0.90</td></tr>
                 <tr className="border-b border-border"><td className="py-1.5 pr-4">command-r-plus</td><td className="py-1.5 pr-4">$2.50</td><td className="py-1.5">$10.00</td></tr>
               </tbody>
             </table>
