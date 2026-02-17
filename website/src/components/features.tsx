@@ -113,10 +113,10 @@ const features = [
 
 const accentMap: Record<string, string> = {
   green: "from-accent to-accent-bright",
-  orange: "from-accent-orange to-accent-orange/70",
-  pink: "from-accent-pink to-accent-pink/70",
-  yellow: "from-accent-yellow to-accent-yellow/70",
-  blue: "from-accent-blue to-accent-blue/70",
+  orange: "from-accent to-accent-bright",
+  pink: "from-accent to-accent-bright",
+  yellow: "from-accent to-accent-bright",
+  blue: "from-accent to-accent-bright",
 };
 
 export function Features() {
