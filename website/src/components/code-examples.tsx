@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 const tabs = [
-  { label: "Drop-in Mode", accent: "text-accent-green", borderColor: "border-accent-green" },
-  { label: "Manual Session", accent: "text-accent-orange", borderColor: "border-accent-orange" },
-  { label: "Async Agent", accent: "text-accent-pink", borderColor: "border-accent-pink" },
-  { label: "Nested Budgets", accent: "text-accent-yellow", borderColor: "border-accent-yellow" },
+  { label: "Drop-in Mode", accent: "text-accent-bright", borderColor: "border-accent" },
+  { label: "Manual Session", accent: "text-accent-bright", borderColor: "border-accent" },
+  { label: "Async Agent", accent: "text-accent-bright", borderColor: "border-accent" },
+  { label: "Nested Budgets", accent: "text-accent-bright", borderColor: "border-accent" },
 ];
 
 const codeBlocks = [
@@ -150,7 +150,7 @@ export function CodeExamples() {
   return (
     <section className="border-x border-t border-border">
       <div className="mx-auto max-w-[1200px] px-6 py-20">
-        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-green">
+        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-bright">
           Code Examples
         </p>
         <h2 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">

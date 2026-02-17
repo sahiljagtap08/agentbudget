@@ -5,9 +5,9 @@ export function Hero() {
     <section className="border-x border-border">
       <div className="mx-auto max-w-[1200px] px-6 pb-16 pt-24 md:pt-32">
         {/* Badge */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 font-mono text-[12px] text-muted-foreground">
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5 font-mono text-[12px] text-muted-foreground">
           <span
-            className="h-1.5 w-1.5 rounded-full bg-accent-green"
+            className="h-1.5 w-1.5 rounded-full bg-accent"
             style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
           />
           OPEN SOURCE &middot; PYTHON SDK
@@ -15,9 +15,7 @@ export function Hero() {
 
         {/* Heading */}
         <h1 className="mb-6 max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-[68px]">
-          <span className="text-muted-foreground">REAL-TIME</span>
-          <br />
-          <span className="text-accent-green">COST ENFORCEMENT</span>
+          <span className="text-gradient-hero">COST ENFORCEMENT</span>
           <br />
           <span className="text-muted-foreground">FOR AI AGENTS</span>
         </h1>
@@ -33,12 +31,13 @@ export function Hero() {
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="https://github.com/sahiljagtap08/agentbudget"
-            className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-2.5 text-[14px] font-semibold text-background transition-opacity hover:opacity-90 hover:no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-accent px-6 py-2.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-90 hover:no-underline"
           >
-            Get Started
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7" />
+              <polyline points="4 17 10 11 4 5" />
+              <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
+            Get Started
           </Link>
           <Link
             href="/docs"
@@ -51,7 +50,7 @@ export function Hero() {
         {/* Install command */}
         <div className="mt-8 inline-flex items-center gap-3 rounded-lg border border-border bg-code-bg px-4 py-2.5 font-mono text-[13px]">
           <span className="text-muted">$</span>
-          <span className="text-accent-green">pip install</span>
+          <span className="text-accent-bright">pip install</span>
           <span className="text-muted-foreground">agentbudget</span>
         </div>
       </div>
