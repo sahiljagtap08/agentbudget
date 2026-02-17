@@ -11,14 +11,14 @@ interface LogEntry {
 }
 
 const logEntries: LogEntry[] = [
-  { time: "14:23:01", tag: "INFO", tagColor: "text-accent-blue", message: "Session started \u00b7 budget:", highlight: "$5.00" },
-  { time: "14:23:02", tag: "LLM", tagColor: "text-accent-green", message: "gpt-4o \u00b7 847 tokens \u00b7 cost:", highlight: "$0.0029" },
-  { time: "14:23:03", tag: "TOOL", tagColor: "text-accent-green", message: "serp_api \u00b7 cost:", highlight: "$0.01" },
-  { time: "14:23:05", tag: "LLM", tagColor: "text-accent-green", message: "gpt-4o \u00b7 2,104 tokens \u00b7 cost:", highlight: "$0.0073" },
-  { time: "14:23:06", tag: "COST", tagColor: "text-accent-yellow", message: "Running total: $0.0202 \u00b7 remaining:", highlight: "$4.98" },
-  { time: "14:23:08", tag: "LLM", tagColor: "text-accent-green", message: "gpt-4o-mini \u00b7 512 tokens \u00b7 cost:", highlight: "$0.0004" },
+  { time: "14:23:01", tag: "INFO", tagColor: "text-accent", message: "Session started \u00b7 budget:", highlight: "$5.00" },
+  { time: "14:23:02", tag: "LLM", tagColor: "text-accent-bright", message: "gpt-4o \u00b7 847 tokens \u00b7 cost:", highlight: "$0.0029" },
+  { time: "14:23:03", tag: "TOOL", tagColor: "text-accent-bright", message: "serp_api \u00b7 cost:", highlight: "$0.01" },
+  { time: "14:23:05", tag: "LLM", tagColor: "text-accent-bright", message: "gpt-4o \u00b7 2,104 tokens \u00b7 cost:", highlight: "$0.0073" },
+  { time: "14:23:06", tag: "COST", tagColor: "text-accent-bright", message: "Running total: $0.0202 \u00b7 remaining:", highlight: "$4.98" },
+  { time: "14:23:08", tag: "LLM", tagColor: "text-accent-bright", message: "gpt-4o-mini \u00b7 512 tokens \u00b7 cost:", highlight: "$0.0004" },
   { time: "14:24:51", tag: "WARN", tagColor: "text-accent-orange", message: "Soft limit reached \u00b7 90% budget used \u00b7", highlight: "$4.52 spent" },
-  { time: "14:25:12", tag: "INFO", tagColor: "text-accent-blue", message: "Session ended \u00b7 total: $4.71 \u00b7 23 calls \u00b7", highlight: "14.2s" },
+  { time: "14:25:12", tag: "INFO", tagColor: "text-accent", message: "Session ended \u00b7 total: $4.71 \u00b7 23 calls \u00b7", highlight: "14.2s" },
 ];
 
 export function ActivityLog() {
@@ -48,7 +48,7 @@ export function ActivityLog() {
   return (
     <section className="border-x border-t border-border">
       <div className="mx-auto max-w-[1200px] px-6 py-20">
-        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-yellow">
+        <p className="mb-3 font-mono text-[11px] font-medium uppercase tracking-widest text-accent-bright">
           Live Monitoring
         </p>
         <h2 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
