@@ -1,17 +1,17 @@
-export const revalidate = 3600; // cache for 1 hour
+export const dynamic = "force-dynamic"; // always fetch fresh
 
 export async function GET() {
   try {
     const res = await fetch(
       "https://pypistats.org/api/packages/agentbudget/overall",
-      { next: { revalidate: 3600 } }
+      { cache: "no-store" }
     );
     const data = await res.json();
-    // Sum all "without_mirrors" entries for total real downloads
+    // Sum "with_mirrors" to match pepy.tech total
     let total = 0;
     if (Array.isArray(data?.data)) {
       for (const entry of data.data) {
-        if (entry.category === "without_mirrors") {
+        if (entry.category === "with_mirrors") {
           total += entry.downloads;
         }
       }
