@@ -149,7 +149,7 @@ export default function DocsPage() {
 
           {/* Drop-in */}
           <h3 id="drop-in" className="mb-4 mt-10 text-lg font-semibold">
-            Drop-in Mode <span className="ml-2 rounded-full bg-accent-green/10 px-2 py-0.5 text-[11px] font-medium text-accent-green">Recommended</span>
+            Drop-in Mode <span className="ml-2 rounded-full bg-accent/10 px-2 py-0.5 text-[11px] font-medium text-accent-bright">Recommended</span>
           </h3>
           <p className="mb-4 text-[14px] text-muted-foreground">
             Add two lines to the top of your script. Every OpenAI and Anthropic call is tracked automatically.
@@ -172,11 +172,11 @@ print(agentbudget.report())     # Full cost breakdown
 
 agentbudget.teardown()  # Stop tracking, get final report`}</Code>
 
-          <div className="mt-4 rounded-lg border-l-2 border-accent-green bg-accent-green/5 px-4 py-3 text-[13px] text-muted-foreground">
+          <div className="mt-4 rounded-lg border-l-2 border-accent bg-accent/5 px-4 py-3 text-[13px] text-muted-foreground">
             <strong className="text-foreground">How it works:</strong>{" "}
-            <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.init()</code> monkey-patches{" "}
-            <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">Completions.create</code> and{" "}
-            <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">Messages.create</code> on the OpenAI and Anthropic SDKs.{" "}
+            <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.init()</code> monkey-patches{" "}
+            <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">Completions.create</code> and{" "}
+            <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">Messages.create</code> on the OpenAI and Anthropic SDKs.{" "}
             Same pattern used by Sentry, Datadog, and other observability tools.
           </div>
 
@@ -190,13 +190,13 @@ agentbudget.teardown()  # Stop tracking, get final report`}</Code>
                 </tr>
               </thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.init(budget)</code></td><td className="py-2">Start tracking. Patches OpenAI/Anthropic. Returns the session.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.spent()</code></td><td className="py-2">Total dollars spent so far.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.remaining()</code></td><td className="py-2">Dollars left in the budget.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.report()</code></td><td className="py-2">Full cost breakdown as a dict.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.track(result, cost, tool_name)</code></td><td className="py-2">Manually track a tool/API call cost.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.get_session()</code></td><td className="py-2">Get the active session for advanced use.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget.teardown()</code></td><td className="py-2">Stop tracking, unpatch SDKs, return final report.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.init(budget)</code></td><td className="py-2">Start tracking. Patches OpenAI/Anthropic. Returns the session.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.spent()</code></td><td className="py-2">Total dollars spent so far.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.remaining()</code></td><td className="py-2">Dollars left in the budget.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.report()</code></td><td className="py-2">Full cost breakdown as a dict.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.track(result, cost, tool_name)</code></td><td className="py-2">Manually track a tool/API call cost.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.get_session()</code></td><td className="py-2">Get the active session for advanced use.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget.teardown()</code></td><td className="py-2">Stop tracking, unpatch SDKs, return final report.</td></tr>
               </tbody>
             </table>
           </div>
@@ -228,7 +228,7 @@ print(session.report())`}</Code>
             Budget Envelope
           </h2>
           <p className="mb-4 text-[14px] text-muted-foreground">
-            A budget envelope is a dollar amount assigned to a unit of work. Every cost is tracked in real time. When exhausted, <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">BudgetExhausted</code> is raised.
+            A budget envelope is a dollar amount assigned to a unit of work. Every cost is tracked in real time. When exhausted, <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">BudgetExhausted</code> is raised.
           </p>
           <Code>{`# All of these work:
 AgentBudget(max_spend="$5.00")
@@ -241,9 +241,9 @@ AgentBudget(max_spend=5)`}</Code>
             Cost Sources
           </h2>
           <ul className="mb-4 list-inside list-disc space-y-2 text-[14px] text-muted-foreground">
-            <li><strong className="text-foreground">LLM calls</strong> — Automatically costed using a built-in pricing table. Use <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">session.wrap(response)</code> or drop-in mode.</li>
-            <li><strong className="text-foreground">Tool calls</strong> — External APIs with known per-call costs. Use <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">session.track(result, cost=0.01)</code>.</li>
-            <li><strong className="text-foreground">Decorated functions</strong> — Annotate with <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">@session.track_tool(cost=0.02)</code> to auto-track on every call.</li>
+            <li><strong className="text-foreground">LLM calls</strong> — Automatically costed using a built-in pricing table. Use <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">session.wrap(response)</code> or drop-in mode.</li>
+            <li><strong className="text-foreground">Tool calls</strong> — External APIs with known per-call costs. Use <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">session.track(result, cost=0.01)</code>.</li>
+            <li><strong className="text-foreground">Decorated functions</strong> — Annotate with <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">@session.track_tool(cost=0.02)</code> to auto-track on every call.</li>
           </ul>
 
           {/* Circuit Breaker */}
@@ -262,8 +262,8 @@ AgentBudget(max_spend=5)`}</Code>
 )`}</Code>
           <ul className="mt-4 list-inside list-disc space-y-2 text-[14px] text-muted-foreground">
             <li><strong className="text-foreground">Soft limit</strong> (default 90%) — Fires a callback. Agent can wrap up gracefully.</li>
-            <li><strong className="text-foreground">Hard limit</strong> (100%) — Raises <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">BudgetExhausted</code>. No more calls.</li>
-            <li><strong className="text-foreground">Loop detection</strong> — Catches repeated calls before they drain the budget. Raises <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">LoopDetected</code>.</li>
+            <li><strong className="text-foreground">Hard limit</strong> (100%) — Raises <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">BudgetExhausted</code>. No more calls.</li>
+            <li><strong className="text-foreground">Loop detection</strong> — Catches repeated calls before they drain the budget. Raises <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">LoopDetected</code>.</li>
           </ul>
 
           {/* Cost Report */}
@@ -318,8 +318,8 @@ async with budget.async_session() as session:
 
     print(parent.spent)      # 1.50
     print(parent.remaining)  # 8.50`}</Code>
-          <div className="mt-4 rounded-lg border-l-2 border-accent-green bg-accent-green/5 px-4 py-3 text-[13px] text-muted-foreground">
-            The child budget is automatically capped at the lesser of <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">max_spend</code> and the parent&apos;s remaining balance.
+          <div className="mt-4 rounded-lg border-l-2 border-accent bg-accent/5 px-4 py-3 text-[13px] text-muted-foreground">
+            The child budget is automatically capped at the lesser of <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">max_spend</code> and the parent&apos;s remaining balance.
           </div>
 
           {/* Webhooks */}
@@ -331,7 +331,7 @@ async with budget.async_session() as session:
     webhook_url="https://your-app.com/api/budget-events",
 )`}</Code>
           <p className="mt-4 text-[14px] text-muted-foreground">
-            Events are sent as JSON POST requests with <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">event_type</code> ({'"'}soft_limit{'"'}, {'"'}hard_limit{'"'}, {'"'}loop_detected{'"'}) and the full cost report. Failures are logged but never raise.
+            Events are sent as JSON POST requests with <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">event_type</code> ({'"'}soft_limit{'"'}, {'"'}hard_limit{'"'}, {'"'}loop_detected{'"'}) and the full cost report. Failures are logged but never raise.
           </p>
 
           {/* Callbacks */}
@@ -345,7 +345,7 @@ async with budget.async_session() as session:
     on_loop_detected=lambda r: logger.error(f"Loop: {r}"),
 )`}</Code>
           <p className="mt-4 text-[14px] text-muted-foreground">
-            When <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">webhook_url</code> is also set, both your callback and the webhook fire.
+            When <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">webhook_url</code> is also set, both your callback and the webhook fire.
           </p>
 
           {/* LangChain */}
@@ -399,9 +399,9 @@ print(middleware.get_report())`}</Code>
             <table className="w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Method</th><th className="py-2 pr-4 text-left font-semibold">Returns</th><th className="py-2 text-left font-semibold">Description</th></tr></thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.session()</code></td><td className="py-2 pr-4">BudgetSession</td><td className="py-2">Create a sync budget session</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.async_session()</code></td><td className="py-2 pr-4">AsyncBudgetSession</td><td className="py-2">Create an async budget session</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.max_spend</code></td><td className="py-2 pr-4">float</td><td className="py-2">The configured budget amount</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.session()</code></td><td className="py-2 pr-4">BudgetSession</td><td className="py-2">Create a sync budget session</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.async_session()</code></td><td className="py-2 pr-4">AsyncBudgetSession</td><td className="py-2">Create an async budget session</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.max_spend</code></td><td className="py-2 pr-4">float</td><td className="py-2">The configured budget amount</td></tr>
               </tbody>
             </table>
           </div>
@@ -411,13 +411,13 @@ print(middleware.get_report())`}</Code>
             <table className="w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Method / Property</th><th className="py-2 text-left font-semibold">Description</th></tr></thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.wrap(response)</code></td><td className="py-2">Extract model/tokens from LLM response and record cost. Returns response.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.track(result, cost, tool_name)</code></td><td className="py-2">Record a tool call cost. Returns the result.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.track_tool(cost, tool_name)</code></td><td className="py-2">Decorator that tracks cost on every call.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.child_session(max_spend)</code></td><td className="py-2">Create child session with sub-budget. Costs roll up.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.report()</code></td><td className="py-2">Full cost report as a dict.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.spent</code></td><td className="py-2">Total dollars spent (float).</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">.remaining</code></td><td className="py-2">Dollars remaining (float).</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.wrap(response)</code></td><td className="py-2">Extract model/tokens from LLM response and record cost. Returns response.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.track(result, cost, tool_name)</code></td><td className="py-2">Record a tool call cost. Returns the result.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.track_tool(cost, tool_name)</code></td><td className="py-2">Decorator that tracks cost on every call.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.child_session(max_spend)</code></td><td className="py-2">Create child session with sub-budget. Costs roll up.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.report()</code></td><td className="py-2">Full cost report as a dict.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.spent</code></td><td className="py-2">Total dollars spent (float).</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">.remaining</code></td><td className="py-2">Dollars remaining (float).</td></tr>
               </tbody>
             </table>
           </div>
@@ -428,7 +428,7 @@ print(middleware.get_report())`}</Code>
           </h2>
           <p className="mb-4 text-[14px] text-muted-foreground">Built-in pricing for 30+ models.</p>
 
-          <h3 className="mb-2 mt-6 text-sm font-semibold text-accent-green">OpenAI</h3>
+          <h3 className="mb-2 mt-6 text-sm font-semibold text-accent-bright">OpenAI</h3>
           <div className="overflow-x-auto">
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
@@ -442,7 +442,7 @@ print(middleware.get_report())`}</Code>
             </table>
           </div>
 
-          <h3 className="mb-2 text-sm font-semibold text-accent-orange">Anthropic</h3>
+          <h3 className="mb-2 text-sm font-semibold text-accent-bright">Anthropic</h3>
           <div className="overflow-x-auto">
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
@@ -454,7 +454,7 @@ print(middleware.get_report())`}</Code>
             </table>
           </div>
 
-          <h3 className="mb-2 text-sm font-semibold text-accent-pink">Google Gemini</h3>
+          <h3 className="mb-2 text-sm font-semibold text-accent-bright">Google Gemini</h3>
           <div className="overflow-x-auto">
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
@@ -465,7 +465,7 @@ print(middleware.get_report())`}</Code>
             </table>
           </div>
 
-          <h3 className="mb-2 text-sm font-semibold text-accent-yellow">Mistral &amp; Cohere</h3>
+          <h3 className="mb-2 text-sm font-semibold text-accent-bright">Mistral &amp; Cohere</h3>
           <div className="overflow-x-auto">
             <table className="mb-6 w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Model</th><th className="py-2 pr-4 text-left font-semibold">Input / 1M</th><th className="py-2 text-left font-semibold">Output / 1M</th></tr></thead>
@@ -476,8 +476,8 @@ print(middleware.get_report())`}</Code>
             </table>
           </div>
 
-          <div className="rounded-lg border-l-2 border-accent-yellow bg-accent-yellow/5 px-4 py-3 text-[13px] text-muted-foreground">
-            Missing a model? Pricing data is in <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">agentbudget/pricing.py</code>. PRs welcome.
+          <div className="rounded-lg border-l-2 border-accent bg-accent/5 px-4 py-3 text-[13px] text-muted-foreground">
+            Missing a model? Pricing data is in <code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">agentbudget/pricing.py</code>. PRs welcome.
           </div>
 
           {/* Exceptions */}
@@ -488,10 +488,10 @@ print(middleware.get_report())`}</Code>
             <table className="w-full text-[13px]">
               <thead><tr className="border-b-2 border-border"><th className="py-2 pr-4 text-left font-semibold">Exception</th><th className="py-2 text-left font-semibold">When</th></tr></thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">BudgetExhausted</code></td><td className="py-2">Session exceeded its dollar budget (hard limit).</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">LoopDetected</code></td><td className="py-2">Repeated calls to the same tool/model detected.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">InvalidBudget</code></td><td className="py-2">Budget string couldn&apos;t be parsed.</td></tr>
-                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-green">AgentBudgetError</code></td><td className="py-2">Base exception for all AgentBudget errors.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">BudgetExhausted</code></td><td className="py-2">Session exceeded its dollar budget (hard limit).</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">LoopDetected</code></td><td className="py-2">Repeated calls to the same tool/model detected.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">InvalidBudget</code></td><td className="py-2">Budget string couldn&apos;t be parsed.</td></tr>
+                <tr className="border-b border-border"><td className="py-2 pr-4"><code className="rounded bg-code-bg px-1.5 py-0.5 text-[12px] text-accent-bright">AgentBudgetError</code></td><td className="py-2">Base exception for all AgentBudget errors.</td></tr>
               </tbody>
             </table>
           </div>

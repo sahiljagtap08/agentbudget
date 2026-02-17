@@ -34,7 +34,7 @@ export function Footer() {
           {/* Brand column */}
           <div>
             <span className="text-[15px] font-bold tracking-tight">
-              Agent<span className="text-accent-green">Budget</span>
+              Agent<span className="text-accent-bright">Budget</span>
             </span>
             <p className="mt-3 text-[13px] leading-relaxed text-muted">
               Real-time cost enforcement
