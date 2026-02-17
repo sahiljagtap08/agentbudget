@@ -4,6 +4,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/agentbudget)](https://pypi.org/project/agentbudget/)
 [![Python](https://img.shields.io/pypi/pyversions/agentbudget)](https://pypi.org/project/agentbudget/)
+[![Downloads](https://static.pepy.tech/personalized-badge/agentbudget?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/agentbudget)
 [![License](https://img.shields.io/github/license/sahiljagtap08/agentbudget)](https://github.com/sahiljagtap08/agentbudget/blob/main/LICENSE)
 
 [Website](https://agentbudget.org) · [Docs](https://agentbudget.org/docs) · [PyPI](https://pypi.org/project/agentbudget/)
