@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { GitHubStars } from "@/components/github-stars";
 
 export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,6 +28,7 @@ export function Nav() {
           <Link href="https://pypi.org/project/agentbudget/" className="text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground hover:no-underline">
             PyPI
           </Link>
+          <GitHubStars />
           <Link
             href="https://github.com/sahiljagtap08/agentbudget"
             className="inline-flex items-center gap-1.5 bg-gradient-accent px-3.5 py-1.5 text-[13px] font-semibold text-white transition-opacity hover:opacity-90 hover:no-underline"

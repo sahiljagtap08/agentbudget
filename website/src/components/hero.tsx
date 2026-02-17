@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { GitHubStars, PyPIDownloads } from "@/components/github-stars";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
@@ -15,13 +16,17 @@ export function Hero() {
   return (
     <section className="border-x border-border">
       <div className="mx-auto max-w-[1200px] px-6 pb-16 pt-24 md:pt-32">
-        {/* Badge */}
-        <div className="mb-6 inline-flex items-center gap-2 border border-accent/20 bg-accent/5 px-4 py-1.5 font-mono text-[12px] text-muted-foreground">
-          <span
-            className="h-1.5 w-1.5 rounded-full bg-accent"
-            style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
-          />
-          OPEN SOURCE &middot; PYTHON SDK
+        {/* Badge + Stats */}
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="inline-flex items-center gap-2 border border-accent/20 bg-accent/5 px-4 py-1.5 font-mono text-[12px] text-muted-foreground">
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-accent"
+              style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
+            />
+            OPEN SOURCE &middot; PYTHON SDK
+          </div>
+          <GitHubStars />
+          <PyPIDownloads />
         </div>
 
         {/* Heading */}
