@@ -17,12 +17,20 @@ export const metadata: Metadata = {
   title: "AgentBudget - Real-time cost enforcement for AI agents",
   description:
     "Open-source Python SDK that puts a hard dollar limit on any AI agent session. One line to set a budget. Zero infrastructure to manage.",
+  metadataBase: new URL("https://agentbudget.dev"),
   openGraph: {
     title: "AgentBudget - The ulimit for AI agents",
     description:
       "Real-time cost enforcement for AI agent sessions. Stop runaway LLM spend with one line of code.",
     url: "https://agentbudget.dev",
+    siteName: "AgentBudget",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AgentBudget - The ulimit for AI agents",
+    description:
+      "Real-time cost enforcement for AI agent sessions. Stop runaway LLM spend with one line of code.",
   },
 };
 
