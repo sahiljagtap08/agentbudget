@@ -74,10 +74,10 @@ export function Problems() {
           {problems.map((p) => (
             <div
               key={p.title}
-              className="group rounded-xl border border-border bg-surface p-6 transition-colors hover:border-border-bright"
+              className="group border border-border bg-surface p-6 transition-colors hover:border-border-bright"
             >
               <div
-                className={`mb-4 inline-flex h-9 w-9 items-center justify-center rounded-lg border ${p.accent} ${p.bg}`}
+                className={`mb-4 inline-flex h-9 w-9 items-center justify-center border ${p.accent} ${p.bg}`}
               >
                 {p.icon}
               </div>

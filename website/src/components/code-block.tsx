@@ -121,11 +121,11 @@ export function CodeBlock({ children, lang = "python" }: CodeBlockProps) {
   };
 
   return (
-    <div className="group relative mb-5 overflow-hidden rounded-lg border border-border bg-code-bg">
+    <div className="group relative mb-5 overflow-hidden border border-border bg-code-bg">
       {/* Copy button */}
       <button
         onClick={handleCopy}
-        className="absolute right-3 top-3 flex items-center gap-1.5 rounded-md border border-border bg-surface/80 px-2 py-1 text-[11px] font-medium text-muted opacity-0 backdrop-blur-sm transition-all hover:border-border-bright hover:text-muted-foreground group-hover:opacity-100"
+        className="absolute right-3 top-3 flex items-center gap-1.5 border border-border bg-surface/80 px-2 py-1 text-[11px] font-medium text-muted opacity-0 backdrop-blur-sm transition-all hover:border-border-bright hover:text-muted-foreground group-hover:opacity-100"
       >
         {copied ? (
           <>

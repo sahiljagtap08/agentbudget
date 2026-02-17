@@ -13,7 +13,7 @@ export function CTA() {
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             href="https://github.com/sahiljagtap08/agentbudget"
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-accent px-6 py-2.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-90 hover:no-underline"
+            className="inline-flex items-center gap-2 bg-gradient-accent px-6 py-2.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-90 hover:no-underline"
           >
             Get Started
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -22,7 +22,7 @@ export function CTA() {
           </Link>
           <Link
             href="/docs"
-            className="inline-flex items-center gap-2 rounded-lg border border-border-bright px-6 py-2.5 text-[14px] font-medium text-foreground transition-colors hover:bg-surface hover:no-underline"
+            className="inline-flex items-center gap-2 border border-border-bright px-6 py-2.5 text-[14px] font-medium text-foreground transition-colors hover:bg-surface hover:no-underline"
           >
             Read the Docs
           </Link>

@@ -96,52 +96,75 @@ with budget.session() as parent:
     print(parent.remaining)  # Budget minus all child spend`,
 ];
 
-function highlightPython(code: string): string {
-  const keywords = ["import", "from", "def", "async", "await", "with", "as", "return", "class", "for", "in", "if", "else", "print", "None", "True", "False"];
-  const lines = code.split("\n");
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
 
-  return lines
+function highlightPython(code: string): string {
+  const keywords = [
+    "import", "from", "def", "async", "await", "with", "as", "return",
+    "class", "for", "in", "if", "else", "elif", "try", "except", "raise",
+    "while", "True", "False", "None", "not", "and", "or", "is", "lambda",
+    "print",
+  ];
+
+  return code
+    .split("\n")
     .map((line) => {
-      // Comments
-      const commentIdx = line.indexOf("#");
-      let mainPart = line;
+      // Separate comment from code
+      let mainPart = escapeHtml(line);
       let commentPart = "";
-      if (commentIdx !== -1) {
-        // Make sure # is not inside a string
-        const beforeHash = line.substring(0, commentIdx);
-        const singleQuotes = (beforeHash.match(/'/g) || []).length;
-        const doubleQuotes = (beforeHash.match(/"/g) || []).length;
-        if (singleQuotes % 2 === 0 && doubleQuotes % 2 === 0) {
-          mainPart = line.substring(0, commentIdx);
-          commentPart = `<span class="tok-cm">${escapeHtml(line.substring(commentIdx))}</span>`;
+
+      const hashIdx = line.indexOf("#");
+      if (hashIdx !== -1) {
+        const before = line.substring(0, hashIdx);
+        const singleQ = (before.match(/'/g) || []).length;
+        const doubleQ = (before.match(/"/g) || []).length;
+        if (singleQ % 2 === 0 && doubleQ % 2 === 0) {
+          mainPart = escapeHtml(line.substring(0, hashIdx));
+          commentPart = `<span style="color:#484f58">${escapeHtml(line.substring(hashIdx))}</span>`;
         }
       }
 
-      // Strings
-      mainPart = mainPart.replace(/("""[\s\S]*?"""|'''[\s\S]*?'''|"[^"]*"|'[^']*')/g, '<span class="tok-str">$1</span>');
+      // Strings (double and single quoted)
+      mainPart = mainPart.replace(
+        /(&quot;[^&]*?&quot;|&#x27;[^&]*?&#x27;|"[^"]*?"|'[^']*?')/g,
+        '<span style="color:#a5d6ff">$1</span>'
+      );
 
-      // Numbers
-      mainPart = mainPart.replace(/\b(\d+\.?\d*)\b/g, '<span class="tok-num">$1</span>');
+      // Decorators
+      mainPart = mainPart.replace(
+        /(@\w+)/g,
+        '<span style="color:#d2a8ff">$1</span>'
+      );
 
       // Keywords
       for (const kw of keywords) {
         const re = new RegExp(`\\b(${kw})\\b`, "g");
-        mainPart = mainPart.replace(re, '<span class="tok-kw">$1</span>');
+        mainPart = mainPart.replace(re, '<span style="color:#ff7b72">$1</span>');
       }
 
-      // Decorators
-      mainPart = mainPart.replace(/(@\w+)/g, '<span class="tok-op">$1</span>');
+      // Numbers (standalone)
+      mainPart = mainPart.replace(
+        /\b(\d+\.?\d*)\b/g,
+        '<span style="color:#ffa657">$1</span>'
+      );
 
-      // Function calls
-      mainPart = mainPart.replace(/(\w+)\(/g, '<span class="tok-fn">$1</span>(');
+      // Function calls (word followed by parenthesis)
+      mainPart = mainPart.replace(
+        /(\w+)\(/g,
+        '<span style="color:#d2a8ff">$1</span>('
+      );
+
+      // Built-in functions
+      mainPart = mainPart.replace(
+        /\b(print|len|range|str|int|float|dict|list|type)\b/g,
+        '<span style="color:#79c0ff">$1</span>'
+      );
 
       return mainPart + commentPart;
     })
     .join("\n");
-}
-
-function escapeHtml(s: string): string {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export function CodeExamples() {
@@ -178,7 +201,7 @@ export function CodeExamples() {
         </div>
 
         {/* Code block */}
-        <div className="overflow-x-auto rounded-b-lg border-x border-b border-border bg-code-bg p-6">
+        <div className="overflow-x-auto border-x border-b border-border bg-code-bg p-6">
           <pre className="font-mono text-[13px] leading-7">
             <code
               dangerouslySetInnerHTML={{

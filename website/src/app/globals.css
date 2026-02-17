@@ -29,7 +29,7 @@ body {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-border-bright); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--color-border-bright); }
 
 /* Code syntax tokens */
 .tok-kw { color: #ff7b72; }
@@ -60,7 +60,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 6s ease-in-out infinite;
+  animation: gradient-shift 16s ease-in-out infinite;
 }
 
 /* Purple accent gradient for buttons */

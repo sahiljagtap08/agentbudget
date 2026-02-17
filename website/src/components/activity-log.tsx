@@ -58,7 +58,7 @@ export function ActivityLog() {
           Every LLM call, tool call, and cost event is logged in real time with a structured report.
         </p>
 
-        <div ref={ref} className="overflow-hidden rounded-xl border border-border">
+        <div ref={ref} className="overflow-hidden border border-border">
           {/* Title bar */}
           <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-3">
             <div className="h-3 w-3 rounded-full bg-[#ff5f57]" />

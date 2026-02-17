@@ -138,7 +138,7 @@ export function Features() {
               className="group border-b border-r border-border p-7 transition-colors hover:bg-surface"
             >
               <div
-                className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-gradient-to-br text-white ${accentGradient}`}
+                className={`mb-4 inline-flex h-10 w-10 items-center justify-center bg-gradient-to-br text-white ${accentGradient}`}
               >
                 {f.icon}
               </div>

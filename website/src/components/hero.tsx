@@ -16,7 +16,7 @@ export function Hero() {
     <section className="border-x border-border">
       <div className="mx-auto max-w-[1200px] px-6 pb-16 pt-24 md:pt-32">
         {/* Badge */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5 font-mono text-[12px] text-muted-foreground">
+        <div className="mb-6 inline-flex items-center gap-2 border border-accent/20 bg-accent/5 px-4 py-1.5 font-mono text-[12px] text-muted-foreground">
           <span
             className="h-1.5 w-1.5 rounded-full bg-accent"
             style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
@@ -46,7 +46,7 @@ export function Hero() {
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="https://github.com/sahiljagtap08/agentbudget"
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-accent px-6 py-2.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-90 hover:no-underline"
+            className="inline-flex items-center gap-2 bg-gradient-accent px-6 py-2.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-90 hover:no-underline"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polyline points="4 17 10 11 4 5" />
@@ -56,7 +56,7 @@ export function Hero() {
           </Link>
           <Link
             href="/docs"
-            className="inline-flex items-center gap-2 rounded-lg border border-border-bright px-6 py-2.5 text-[14px] font-medium text-foreground transition-colors hover:bg-surface hover:no-underline"
+            className="inline-flex items-center gap-2 border border-border-bright px-6 py-2.5 text-[14px] font-medium text-foreground transition-colors hover:bg-surface hover:no-underline"
           >
             Read the Docs
           </Link>
@@ -65,7 +65,7 @@ export function Hero() {
         {/* Install command with copy */}
         <button
           onClick={handleCopy}
-          className="mt-8 inline-flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-code-bg px-4 py-2.5 font-mono text-[13px] transition-colors hover:border-border-bright"
+          className="mt-8 inline-flex cursor-pointer items-center gap-3 border border-border bg-code-bg px-4 py-2.5 font-mono text-[13px] transition-colors hover:border-border-bright"
         >
           <span className="text-muted">$</span>
           <span className="text-accent-bright">pip install</span>
