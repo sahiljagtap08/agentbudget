@@ -6,6 +6,7 @@ import { Problems } from "@/components/problems";
 import { Features } from "@/components/features";
 import { ActivityLog } from "@/components/activity-log";
 import { CTA } from "@/components/cta";
+import { StarHistory } from "@/components/star-history";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         <Problems />
         <Features />
         <ActivityLog />
+        <StarHistory />
         <CTA />
         <Footer />
       </main>
