@@ -28,6 +28,9 @@ export function Nav() {
           <Link href="https://pypi.org/project/agentbudget/" className="text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground hover:no-underline">
             PyPI
           </Link>
+          <Link href="/whitepaper" className="text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground hover:no-underline">
+            Whitepaper
+          </Link>
           <GitHubStars />
           <Link
             href="https://github.com/sahiljagtap08/agentbudget"
@@ -61,6 +64,7 @@ export function Nav() {
           <div className="flex flex-col gap-3">
             <Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground" onClick={() => setMobileOpen(false)}>Docs</Link>
             <Link href="https://pypi.org/project/agentbudget/" className="text-sm text-muted-foreground hover:text-foreground">PyPI</Link>
+            <Link href="/whitepaper" className="text-sm text-muted-foreground hover:text-foreground" onClick={() => setMobileOpen(false)}>Whitepaper</Link>
             <Link href="https://github.com/sahiljagtap08/agentbudget" className="text-sm text-muted-foreground hover:text-foreground">GitHub</Link>
           </div>
         </div>

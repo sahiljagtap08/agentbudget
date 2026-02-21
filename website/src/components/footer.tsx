@@ -16,6 +16,8 @@ const columns = [
       { label: "Getting Started", href: "/docs#installation" },
       { label: "API Reference", href: "/docs#api-reference" },
       { label: "Supported Models", href: "/docs#supported-models" },
+      { label: "Whitepaper", href: "/whitepaper" },
+      { label: "Published Paper (DOI)", href: "https://doi.org/10.5281/zenodo.18720464" },
     ],
   },
   {
