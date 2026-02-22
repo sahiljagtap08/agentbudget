@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
-import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { Nav } from "@/components/nav";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Whitepaper",
@@ -37,7 +37,7 @@ export default function WhitepaperPage() {
             </div>
 
             <a
-              href="https://doi.org/10.5281/zenodo.18720464"
+              href="https://doi.org/10.5281/zenodo.18734145"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex shrink-0 items-center gap-2 border border-border-bright px-4 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-surface hover:no-underline sm:self-end"
@@ -73,7 +73,7 @@ export default function WhitepaperPage() {
             </a>
             {" "}or{" "}
             <a
-              href="https://doi.org/10.5281/zenodo.18720464"
+              href="https://doi.org/10.5281/zenodo.18734145"
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent-bright underline-offset-2 hover:underline"
